@@ -1,0 +1,27 @@
+local current_scene = nil
+
+local function load_scene(new_scene)
+	if current_scene then
+		msg.post(current_scene, "unload")
+	end
+
+	local scene = "#" .. new_scene
+	current_scene = scene
+
+	msg.post(scene, "load")
+end
+
+function init(self)
+	load_scene("main_menu") 
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("proxy_loaded") then
+		msg.post(sender, "enable")
+		msg.post(sender, "acquire_input_focus")
+	end
+
+	if message_id == hash("load_scene") and message.scene then
+		load_scene(message.scene)
+	end
+end

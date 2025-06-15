@@ -1,0 +1,14 @@
+name: "main_menu"
+scale_along_z: 0
+embedded_instances {
+  id: "interface"
+  data: "components {\n"
+  "  id: \"main_menu\"\n"
+  "  component: \"/main/main_menu.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "music"
+  data: ""
+}

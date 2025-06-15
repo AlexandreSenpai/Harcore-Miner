@@ -1,0 +1,5 @@
+font: "/assets/fonts/dogica.otf"
+material: "/builtins/fonts/debug/always_on_top_font.material"
+size: 10
+antialias: 0
+characters: " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"

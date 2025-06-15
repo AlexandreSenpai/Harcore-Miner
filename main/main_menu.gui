@@ -1,0 +1,157 @@
+script: "/main/scripts/main_menu.gui_script"
+fonts {
+  name: "always_on_top"
+  font: "/assets/fonts/default.font"
+}
+textures {
+  name: "player"
+  texture: "/assets/tiles/main_menu.tilesource"
+}
+textures {
+  name: "logo"
+  texture: "/assets/tiles/logo.tilesource"
+}
+textures {
+  name: "world"
+  texture: "/assets/atlases/world.atlas"
+}
+nodes {
+  size {
+    x: 528.0
+    y: 288.0
+  }
+  color {
+    x: 0.133
+    y: 0.125
+    z: 0.204
+  }
+  type: TYPE_BOX
+  id: "Background"
+  pivot: PIVOT_SW
+  layer: "0"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 528.0
+    y: 288.0
+  }
+  type: TYPE_BOX
+  texture: "player/anim"
+  id: "Image"
+  pivot: PIVOT_SW
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 263.0
+    y: 25.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Press any key to start"
+  font: "always_on_top"
+  id: "text"
+  layer: "Texts"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 193.0
+    y: 152.0
+  }
+  size {
+    x: 137.0
+    y: 19.0
+  }
+  type: TYPE_BOX
+  texture: "logo/anim"
+  id: "logo"
+  pivot: PIVOT_SW
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 217.0
+    y: 150.0
+  }
+  type: TYPE_BOX
+  id: "blocks"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  type: TYPE_BOX
+  texture: "world/block_green"
+  id: "green"
+  parent: "blocks"
+  layer: "1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 18.0
+    y: -5.0
+  }
+  type: TYPE_BOX
+  texture: "world/block_blue"
+  id: "blue"
+  parent: "blocks"
+  layer: "1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 36.0
+  }
+  type: TYPE_BOX
+  texture: "world/block_red"
+  id: "red"
+  parent: "blocks"
+  layer: "1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 54.0
+    y: -5.0
+  }
+  type: TYPE_BOX
+  texture: "world/block_white"
+  id: "white"
+  parent: "blocks"
+  layer: "1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 72.0
+  }
+  type: TYPE_BOX
+  texture: "world/block_pink"
+  id: "pink"
+  parent: "blocks"
+  layer: "1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+layers {
+  name: "0"
+}
+layers {
+  name: "1"
+}
+layers {
+  name: "Texts"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

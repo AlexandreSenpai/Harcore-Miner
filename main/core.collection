@@ -1,0 +1,22 @@
+name: "core"
+scale_along_z: 0
+embedded_instances {
+  id: "SceneManager"
+  data: "components {\n"
+  "  id: \"scene_manager\"\n"
+  "  component: \"/main/scripts/scene_manager.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"game\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/main/main.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"main_menu\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/main/main_menu.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
