@@ -4,7 +4,7 @@ embedded_instances {
   id: "interface"
   data: "components {\n"
   "  id: \"main_menu\"\n"
-  "  component: \"/main/main_menu.gui\"\n"
+  "  component: \"/main/gui/main_menu.gui\"\n"
   "}\n"
   ""
 }

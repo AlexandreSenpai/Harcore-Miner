@@ -10,32 +10,32 @@ BLOCK_MAP = {
 	blue = {
 		probability = 3,
 		label = "BLUE",
-		url = "/mining_blocks#block_blue_factory"
+		sprite = "block_blue"
 	},
 	green = {
 		probability = 3,
 		label = "GREEN",
-		url = "/mining_blocks#block_green_factory"
+		sprite = "block_green"
 	},
 	pink = {
 		probability = 1,
 		label = "PINK",
-		url = "/mining_blocks#block_pink_factory"
+		sprite = "block_pink"
 	},
 	red = {
 		probability = 3,
 		label = "RED",
-		url = "/mining_blocks#block_red_factory"
+		sprite = "block_red"
 	},
 	white = {
 		probability = 10,
 		label = "WHITE",
-		url = "/mining_blocks#block_white_factory"
+		sprite = "block_white"
 	},
 	stone = {
 		probability = 80,
 		label = "STONE",
-		url = "/mining_blocks#block_stone_factory"
+		sprite = "block_stone"
 	}
 }
 
@@ -48,7 +48,7 @@ function select_block_by_probability()
 	for block, definition in pairs(BLOCK_MAP) do
 		cumulative_weight = cumulative_weight + definition["probability"]
 		if random_number <= cumulative_weight then
-			return definition["url"]
+			return definition
 		end
 	end
 end
@@ -68,14 +68,15 @@ function calculate_margin(self, x, y)
 	return x_margin, y_margin
 end
 
-function spawn_block(self, url, x, y)
+function spawn_block(self, sprite, x, y)
 	local x_margin, y_margin = calculate_margin(self, x, y)
 
 	local x_pos = self.anchor_point.x + ((x - 1) * (self.block_size + x_margin))
 	local y_pos = self.anchor_point.y + ((y - 1) * (self.block_size + y_margin))
 	
-	local block_id = factory.create(url, vmath.vector3(x_pos, y_pos, 1))
-	print("Spawning ", block_id)
+	local block_id = factory.create("/mining_blocks#block_factory", vmath.vector3(x_pos, y_pos, 1))
+	msg.post(block_id, "play_animation", { id = hash(sprite)})
+	msg.post(block_id, "set_cord", { cord = vmath.vector3(x,y,0)})
 end
 
 function generate_map(self)
@@ -83,57 +84,12 @@ function generate_map(self)
 		MINING_MAP[y] = {}
 		for x=1, self.grid_width do
 			local selected_block = select_block_by_probability()
-			MINING_MAP[y][x] = selected_block
-			spawn_block(self, selected_block, x, y)
+			-- MINING_MAP[y][x] = selected_block
+			spawn_block(self, selected_block.sprite, x, y)
 		end
 	end
 end
 
 function init(self)
 	generate_map(self)
-end
-
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function fixed_update(self, dt)
-	-- This function is called if 'Fixed Update Frequency' is enabled in the Engine section of game.project
-	-- Can be coupled with fixed updates of the physics simulation if 'Use Fixed Timestep' is enabled in
-	-- Physics section of game.project
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
-end
-
-function on_input(self, action_id, action)
-	-- Add input-handling code here. The game object this script is attached to
-	-- must have acquired input focus:
-	--
-	--    msg.post(".", "acquire_input_focus")
-	--
-	-- All mapped input bindings will be received. Mouse and touch input will
-	-- be received regardless of where on the screen it happened.
-	-- Learn more: https://defold.com/manuals/input/
-	-- Remove this function if not needed
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
 end

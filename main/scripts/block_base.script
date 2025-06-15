@@ -1,0 +1,13 @@
+go.property("cord", vmath.vector3())
+go.property("life", 0)
+local is_colliding = false
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_cord") then
+		go.set("#", "cord", message.cord)
+	end
+
+	if message_id == hash("collision_response") then
+		print(message.other_id)
+	end
+end
