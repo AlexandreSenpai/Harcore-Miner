@@ -1,0 +1,31 @@
+images {
+  image: "/assets/images/world/block_white.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_blue.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_green.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_pink.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_red.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_stone.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+extrude_borders: 2

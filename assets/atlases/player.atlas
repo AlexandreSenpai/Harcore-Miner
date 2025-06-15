@@ -1,0 +1,23 @@
+animations {
+  id: "running"
+  images {
+    image: "/assets/images/player/running_0.png"
+  }
+  images {
+    image: "/assets/images/player/running_1.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+}
+animations {
+  id: "idle"
+  images {
+    image: "/assets/images/idle_0.png"
+  }
+  images {
+    image: "/assets/images/idle_1.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 3
+}
+extrude_borders: 2

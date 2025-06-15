@@ -1,0 +1,39 @@
+function init(self)
+	-- Pede para este objeto receber todo tipo de input, incluindo movimento do mouse
+	msg.post(".", "acquire_input_focus")
+
+	-- (Opcional) Esconde o cursor no início se ele não deve aparecer até que o mouse se mova
+	-- sprite.set_enabled("#sprite", false)
+end
+
+function on_input(self, action_id, action)
+	-- A ação de movimento do mouse não tem um 'action_id' definido
+	if action_id == nil then
+
+		-- Se o cursor estava desabilitado, habilita na primeira vez que o mouse se move
+		-- sprite.set_enabled("#sprite", true)
+
+		-- Pega a posição Z atual para mantê-la
+		local pos = go.get_position()
+
+		-- Atualiza a posição do nosso Game Object para ser exatamente a posição do mouse na tela
+		-- action.x e action.y nos dão as coordenadas do cursor
+		pos.x = action.x
+		pos.y = action.y
+		go.set_position(pos)
+	end
+
+	-- Adicional: Você pode usar outras ações para mudar a aparência do cursor
+	-- Ex: se action_id == hash("mouse_button_left") then ...
+end
+
+-- (Opcional) Você pode criar uma função para mudar a animação do cursor
+-- Isso é útil para quando o mouse passa por cima de um botão, por exemplo.
+-- Para usar, outro script enviaria uma mensagem: msg.post("cursor", "set_cursor", { animation = "hand" })
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_cursor") then
+		if message.animation then
+			sprite.play_flipbook("#sprite", message.animation)
+		end
+	end
+end
