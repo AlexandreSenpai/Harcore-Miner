@@ -28,4 +28,129 @@ images {
   pivot_x: 0.0
   pivot_y: 0.0
 }
+images {
+  image: "/assets/images/world/block_red_break_0.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_red_break_1.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_red_break_2.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_red_break_3.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_red_break_4.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_pink_break_0.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_pink_break_1.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_pink_break_2.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_pink_break_3.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_pink_break_4.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_blue_break_0.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_blue_break_1.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_blue_break_2.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_blue_break_3.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_blue_break_4.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_white_break_0.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_white_break_1.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_white_break_2.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_white_break_3.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_white_break_4.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_green_break_0.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_green_break_1.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_green_break_2.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_green_break_3.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
+images {
+  image: "/assets/images/world/block_green_break_4.png"
+  pivot_x: 0.0
+  pivot_y: 0.0
+}
 extrude_borders: 2

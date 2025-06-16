@@ -1,7 +1,7 @@
 [project]
 title = Hardcore Miner
-dependencies#0 = https://github.com/indiesoftby/defold-pointer-lock/archive/refs/tags/2.0.0.zip
-dependencies#1 = https://github.com/britzl/defold-orthographic/archive/refs/tags/3.4.0.zip
+dependencies#0 = https://github.com/britzl/defold-orthographic/archive/refs/tags/3.4.0.zip
+dependencies#1 = https://github.com/britzl/defold-input/archive/master.zip
 
 [bootstrap]
 main_collection = /main/core.collectionc

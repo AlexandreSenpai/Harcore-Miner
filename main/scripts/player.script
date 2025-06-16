@@ -1,18 +1,32 @@
-local status = {
-	str = 0
-}
+go.property("damage", 1)
 
 function init(self)
-	return
+
 end
 
-function increase_str(amount)
-	status.str = status.str + amount
-	print(status.str)
-end
-
-function on_input(self, action_id, action)
-	if action_id == hash("down") then
-		increase_str(1)
+function on_message(self, message_id, message, sender)
+	if message_id == hash('pressed') then
+		deal_damage(self, { url = message.id, x = message.x, y = message.y }, self.damage)
 	end
+end
+
+function check_radius_optimized(target_pos, radius)
+	-- Pega a posição atual
+	local current_loc = go.get_position()
+
+	-- Calcula a DISTÂNCIA AO QUADRADO. É muito mais rápido.
+	local distance_squared = vmath.length_sqr(target_pos - current_loc)
+
+	-- Compara com o RAIO AO QUADRADO
+	return distance_squared <= (radius * radius)
+end
+
+function deal_damage(self, target, damage)
+	local can_deal_damage = check_radius_optimized(vmath.vector3(target.x, target.y, 0), 25)
+	print(can_deal_damage)
+	if not can_deal_damage then
+		return
+	end
+	
+	msg.post(target.url, "take_damage", { damage = self.damage })
 end

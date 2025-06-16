@@ -16,7 +16,8 @@
     ],
     "Lua.workspace.library": [
         "~\\AppData\\Roaming\\Code\\User\\globalStorage\\astronachos.defold",
-        "~\\AppData\\Roaming\\Code\\User\\workspaceStorage\\c950e5f42756a0aa3af1007429cfe5cf\\astronachos.defold"
+        "~\\AppData\\Roaming\\Code\\User\\workspaceStorage\\c950e5f42756a0aa3af1007429cfe5cf\\astronachos.defold",
+        "~\\AppData\\Roaming\\Code\\User\\workspaceStorage\\fc625be5762be37b8a403110e1c64a0f\\astronachos.defold"
     ],
     "files.associations": {
         "*.project": "ini",
@@ -57,5 +58,9 @@
         "*.appmanifest": "yaml",
         "*.script_api": "yaml",
         "ext.manifest": "yaml"
+    },
+    "glsllint.additionalStageAssociations": {
+        ".fp": "frag",
+        ".vp": "vert"
     }
 }

@@ -40,9 +40,10 @@ embedded_components {
   "    count: 3\n"
   "    id: \"collision\"\n"
   "  }\n"
-  "  data: 6.0\n"
+  "  data: 4.0\n"
   "  data: 7.0\n"
   "  data: 10.0\n"
   "}\n"
+  "locked_rotation: true\n"
   ""
 }

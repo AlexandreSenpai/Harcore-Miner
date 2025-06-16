@@ -1,95 +1,165 @@
+-- ======================================================
+-- PROPRIEDADES DO GERADOR DE GRID
+-- ======================================================
 go.property("block_size", 16)
 go.property("grid_width", 5)
-go.property("grid_height", 10)
+go.property("grid_height", 9)
 go.property("grid_gap", 1)
-go.property("anchor_point", vmath.vector3(224, 0, 0))
+go.property("anchor_point", vmath.vector3(224, 144, 0)) -- Y ajustado para gerar de cima para baixo
+go.property("current_stage", 1)
 
-MINING_MAP = {}
-
-BLOCK_MAP = {
-	blue = {
-		probability = 3,
-		label = "BLUE",
-		sprite = "block_blue"
-	},
-	green = {
-		probability = 3,
-		label = "GREEN",
-		sprite = "block_green"
-	},
-	pink = {
-		probability = 1,
-		label = "PINK",
-		sprite = "block_pink"
-	},
-	red = {
-		probability = 3,
-		label = "RED",
-		sprite = "block_red"
+-- ======================================================
+-- MAPA DE BLOCOS COM FATORES DE ESCALA DINÂMICOS
+-- ======================================================
+local BLOCK_MAP = {
+	stone = {
+		label = "stone", sprite = "block_stone",
+		base_probability = 80, probability_shift = -1.0, -- Perde 1% de chance por estágio
+		base_durability = 1, durability_scale = 1.10,
+		base_reward = 1, reward_scale = 1.08
 	},
 	white = {
-		probability = 10,
-		label = "WHITE",
-		sprite = "block_white"
+		label = "white", sprite = "block_white",
+		base_probability = 10, probability_shift = 0.5, -- Ganha 0.5%
+		base_durability = 2, durability_scale = 1.12,
+		base_reward = 5, reward_scale = 1.15
 	},
-	stone = {
-		probability = 80,
-		label = "STONE",
-		sprite = "block_stone"
+	red = {
+		label = "red", sprite = "block_red",
+		base_probability = 3, probability_shift = 0.1, -- Ganha 0.1%
+		base_durability = 3, durability_scale = 1.15,
+		base_reward = 15, reward_scale = 1.20
+	},
+	green = {
+		label = "green", sprite = "block_green",
+		base_probability = 3, probability_shift = 0.1, -- Ganha 0.1%
+		base_durability = 3, durability_scale = 1.15,
+		base_reward = 15, reward_scale = 1.20
+	},
+	blue = {
+		label = "blue", sprite = "block_blue",
+		base_probability = 3, probability_shift = 0.1, -- Ganha 0.1%
+		base_durability = 3, durability_scale = 1.15,
+		base_reward = 15, reward_scale = 1.20
+	},
+	pink = {
+		label = "pink", sprite = "block_pink",
+		base_probability = 1, probability_shift = 0.2, -- Ganha 0.2%
+		base_durability = 5, durability_scale = 1.25,
+		base_reward = 50, reward_scale = 1.28
 	}
 }
 
+-- ======================================================
+-- FUNÇÕES PARA CALCULAR OS VALORES DINÂMICOS
+-- ======================================================
 
-function select_block_by_probability()
+--- Calcula os atributos de todos os blocos para um estágio específico.
+-- @param stage_number O número do estágio atual.
+-- @return Uma tabela de blocos com seus atributos calculados para o estágio.
+local function get_block_data_for_stage(stage_number)
+	local stage_blocks = {}
+	local total_probability = 0
+
+	for block_name, data in pairs(BLOCK_MAP) do
+		-- O expoente de escala (stage 1 = 0, stage 2 = 1, etc.)
+		local scale_exponent = stage_number - 1
+
+		-- Calcula a probabilidade ajustada para o estágio
+		local current_probability = data.base_probability + (data.probability_shift * scale_exponent)
+		-- Garante que a probabilidade não seja negativa
+		current_probability = math.max(0, current_probability)
+		total_probability = total_probability + current_probability
+
+		-- Calcula durabilidade e recompensa com juros compostos
+		local current_durability = math.floor(data.base_durability * (data.durability_scale ^ scale_exponent))
+		local current_reward = math.floor(data.base_reward * (data.reward_scale ^ scale_exponent))
+
+		stage_blocks[block_name] = {
+			name = block_name,
+			probability = current_probability,
+			sprite = data.sprite,
+			props = {
+				durability = math.max(1, current_durability), -- Garante no mínimo 1 de durabilidade
+				reward = math.max(1, current_reward)
+			}
+		}
+	end
+
+	-- Normaliza as probabilidades para que a soma seja sempre 100%
+	for block_name, data in pairs(stage_blocks) do
+		if total_probability > 0 then
+			data.probability = (data.probability / total_probability) * 100
+		else
+			data.probability = 0
+		end
+	end
+
+	return stage_blocks
+end
+
+--- Seleciona um bloco aleatoriamente com base na tabela de probabilidades do estágio.
+-- @param stage_blocks_table A tabela gerada por get_block_data_for_stage.
+-- @return Os dados do bloco selecionado.
+local function select_block_by_probability(stage_blocks_table)
 	local total_weight = 100
 	local random_number = math.random() * total_weight
 
 	local cumulative_weight = 0
-	for block, definition in pairs(BLOCK_MAP) do
-		cumulative_weight = cumulative_weight + definition["probability"]
+	for block_name, data in pairs(stage_blocks_table) do
+		cumulative_weight = cumulative_weight + data.probability
 		if random_number <= cumulative_weight then
-			return definition
+			return data
 		end
 	end
 end
 
-function calculate_margin(self, x, y)
-	local x_margin = 0
-	local y_margin = 0
+-- ======================================================
+-- FUNÇÕES DE GERAÇÃO DO MAPA
+-- ======================================================
 
-	if x > 1 and x < self.grid_width + 1 then
-		x_margin = self.grid_gap
-	end
+function spawn_block(self, block_data, x, y)
+	-- Cálculo de posição simplificado para incluir o gap
+	local total_block_size = self.block_size + self.grid_gap
+	local x_pos = self.anchor_point.x + (x * total_block_size)
+	local y_pos = self.anchor_point.y - (y * total_block_size) -- Subtrai para gerar de cima para baixo
 
-	if y > 1 and y < self.grid_height + 1 then
-		y_margin = self.grid_gap
-	end
-
-	return x_margin, y_margin
-end
-
-function spawn_block(self, sprite, x, y)
-	local x_margin, y_margin = calculate_margin(self, x, y)
-
-	local x_pos = self.anchor_point.x + ((x - 1) * (self.block_size + x_margin))
-	local y_pos = self.anchor_point.y + ((y - 1) * (self.block_size + y_margin))
-	
 	local block_id = factory.create("/mining_blocks#block_factory", vmath.vector3(x_pos, y_pos, 1))
-	msg.post(block_id, "play_animation", { id = hash(sprite)})
-	msg.post(block_id, "set_cord", { cord = vmath.vector3(x,y,0)})
+
+	-- Manda o bloco tocar a animação/sprite correta
+	msg.post(block_id, "play_animation", { id = hash(block_data.sprite) })
+
+	-- Manda os dados de inicialização para o bloco (durabilidade, recompensa, etc)
+	msg.post(
+		block_id,
+		"initialize",
+		{
+			coord = vmath.vector3(x, y, 0),
+			durability = block_data.props.durability,
+			reward = block_data.props.reward,
+			name = block_data.name
+		}
+	)
 end
 
-function generate_map(self)
-	for y=1, self.grid_height do
-		MINING_MAP[y] = {}
-		for x=1, self.grid_width do
-			local selected_block = select_block_by_probability()
-			-- MINING_MAP[y][x] = selected_block
-			spawn_block(self, selected_block.sprite, x, y)
+function generate_map(self, stage)
+	-- 1. Calcula os dados e probabilidades para o estágio atual
+	local stage_blocks_data = get_block_data_for_stage(stage)
+
+	-- 2. Gera a grade de blocos
+	-- Usar loops de 0 a N-1 simplifica o cálculo de posição
+	for y = 0, self.grid_height - 1 do
+		for x = 0, self.grid_width - 1 do
+			-- Seleciona um bloco com base nas probabilidades do estágio atual
+			local selected_block_data = select_block_by_probability(stage_blocks_data)
+			if selected_block_data then
+				spawn_block(self, selected_block_data, x, y)
+			end
 		end
 	end
 end
 
 function init(self)
-	generate_map(self)
+	math.randomseed(os.time())
+	generate_map(self, self.current_stage)
 end

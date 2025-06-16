@@ -1,13 +1,82 @@
-go.property("cord", vmath.vector3())
-go.property("life", 0)
-local is_colliding = false
+local manager = require("main.scripts.game_manager")
+
+go.property("coord", vmath.vector3())
+go.property("durability", 0)
+go.property("reward", 0)
+go.property("name", nil) -- por exemplo "white", "red", "blue", "pink"
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("set_cord") then
-		go.set("#", "cord", message.cord)
+	if message_id == hash("initialize") then
+		self.coord = message.coord
+		self.durability = message.durability
+		self.reward = message.reward
+		self.name = message.name
+
+		-- Guarda a durabilidade máxima para calcular a porcentagem de vida
+		self.max_durability = message.durability
 	end
 
-	if message_id == hash("collision_response") then
-		print(message.other_id)
+	if message_id == hash("take_damage") then
+		take_damage(self, message.damage)
+	end
+end
+
+---
+-- Atualiza o sprite do bloco para refletir o dano atual.
+-- Distribui os 5 frames de quebra com base na porcentagem de vida restante.
+---
+function update_break_sprite(self)
+
+	if self.name == 'stone' then
+		return
+	end
+	
+	-- Evita divisão por zero se o bloco for criado com 0 de durabilidade
+	if self.max_durability <= 0 then return end
+
+	-- 1. Calcula a porcentagem de vida restante (de 0.0 a 1.0)
+	local health_percentage = self.durability / self.max_durability
+
+	local frame_number = 0
+	-- 2. Mapeia a porcentagem para um dos 5 frames (0 a 4)
+	if health_percentage > 0.8 then
+		-- Acima de 80% de vida, não mostra rachaduras visíveis
+		-- Se você tiver um sprite "intacto", pode usá-lo aqui.
+		-- Por enquanto, vamos pular a mudança de sprite.
+		return 
+	elseif health_percentage > 0.6 then
+		frame_number = 0 -- Entre 60% e 80%
+	elseif health_percentage > 0.4 then
+		frame_number = 1 -- Entre 40% e 60%
+	elseif health_percentage > 0.2 then
+		frame_number = 2 -- Entre 20% e 40%
+	elseif health_percentage > 0 then
+		frame_number = 3 -- Entre 0% e 20% (quase quebrando)
+	else
+		frame_number = 4 -- Quebrado
+	end
+
+	-- 3. Constrói o nome da animação do sprite
+	local sprite_animation = "block_" .. self.name .. "_break_" .. frame_number
+
+	-- 4. Toca a animação correspondente
+	-- Assegure-se que o componente sprite neste Game Object tem o id "sprite"
+	sprite.play_flipbook("#sprite", sprite_animation)
+end
+
+function take_damage(self, damage)
+	-- Se o bloco já está quebrado, não faz nada
+	if self.durability <= 0 then return end
+
+	self.durability = self.durability - damage
+
+	-- Atualiza o visual do bloco para refletir o novo dano
+	update_break_sprite(self)
+
+	if self.durability <= 0 then
+		-- Adiciona o ouro ao jogador usando o módulo manager
+		manager.status.gold = manager.status.gold + self.reward
+		-- Apaga o bloco
+		go.delete()
 	end
 end

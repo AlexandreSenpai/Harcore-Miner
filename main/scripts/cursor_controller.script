@@ -1,0 +1,20 @@
+local cursor = require "in.cursor"
+
+function init(self)
+	if not go.get("#cursor", "acquire_input_focus") then
+		self.forward_input = true
+		msg.post(".", "acquire_input_focus")
+	end
+end
+
+function on_input(self, action_id, action)
+	if self.forward_input then
+		msg.post("#cursor", "input", { action_id = action_id, action = action })
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == cursor.PRESSED then
+		msg.post("/player#player", message_id, message)
+	end
+end

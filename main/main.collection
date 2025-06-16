@@ -11,53 +11,23 @@ instances {
 instances {
   id: "cursor"
   prototype: "/main/game_objects/cursor.go"
+  component_properties {
+    id: "cursor"
+    properties {
+      id: "drag"
+      value: "false"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+  }
 }
 instances {
   id: "footstep"
   prototype: "/main/game_objects/footstep.go"
 }
-instances {
-  id: "camera"
-  prototype: "/orthographic/camera.go"
-  component_properties {
-    id: "script"
-    properties {
-      id: "zoom"
-      value: "4.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-    properties {
-      id: "automatic_zoom"
-      value: "false"
-      type: PROPERTY_TYPE_BOOLEAN
-    }
-    properties {
-      id: "follow"
-      value: "true"
-      type: PROPERTY_TYPE_BOOLEAN
-    }
-    properties {
-      id: "follow_target"
-      value: "/player"
-      type: PROPERTY_TYPE_HASH
-    }
-    properties {
-      id: "bounds_right"
-      value: "528.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-    properties {
-      id: "bounds_top"
-      value: "288.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-  }
-}
 scale_along_z: 0
 embedded_instances {
   id: "environment"
   children: "background"
-  children: "camera"
   children: "mining_blocks"
   children: "sounds"
   data: ""
@@ -70,6 +40,11 @@ embedded_instances {
   "  properties {\n"
   "    id: \"grid_gap\"\n"
   "    value: \"0.0\"\n"
+  "    type: PROPERTY_TYPE_NUMBER\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"current_stage\"\n"
+  "    value: \"5.0\"\n"
   "    type: PROPERTY_TYPE_NUMBER\n"
   "  }\n"
   "}\n"
