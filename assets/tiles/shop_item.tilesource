@@ -1,0 +1,16 @@
+image: "/assets/images/HUD/damage.png"
+tile_width: 50
+tile_height: 58
+collision: "/assets/images/HUD/damage.png"
+convex_hulls {
+  index: 0
+  count: 4
+  collision_group: "default"
+}
+collision_groups: "default"
+animations {
+  id: "anim"
+  start_tile: 1
+  end_tile: 1
+}
+extrude_borders: 2

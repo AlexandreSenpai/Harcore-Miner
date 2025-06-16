@@ -1,0 +1,10 @@
+name: "shop"
+scale_along_z: 0
+embedded_instances {
+  id: "interface"
+  data: "components {\n"
+  "  id: \"shop\"\n"
+  "  component: \"/main/gui/shop.gui\"\n"
+  "}\n"
+  ""
+}

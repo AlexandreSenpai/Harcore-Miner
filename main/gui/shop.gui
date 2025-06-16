@@ -1,2 +1,217 @@
+script: "/main/scripts/shop.gui_script"
+fonts {
+  name: "default"
+  font: "/assets/fonts/body.font"
+}
+fonts {
+  name: "label"
+  font: "/assets/fonts/label.font"
+}
+textures {
+  name: "shop_item"
+  texture: "/assets/atlases/shop_items.atlas"
+}
+nodes {
+  position {
+    x: 265.0
+    y: 210.0
+  }
+  size {
+    x: 200.0
+    y: 20.0
+  }
+  type: TYPE_TEXT
+  text: "Shop"
+  font: "default"
+  id: "text"
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 265.0
+    y: 154.0
+  }
+  size {
+    x: 250.0
+    y: 150.0
+  }
+  color {
+    x: 0.063
+    y: 0.059
+    z: 0.098
+  }
+  type: TYPE_BOX
+  id: "background"
+  layer: "0"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 219.0
+    y: 147.0
+  }
+  type: TYPE_BOX
+  texture: "shop_item/timer"
+  id: "timer"
+  layer: "0"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 306.0
+    y: 147.0
+  }
+  type: TYPE_BOX
+  texture: "shop_item/damage"
+  id: "damage"
+  layer: "0"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 304.0
+    y: 109.0
+  }
+  size {
+    x: 80.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "+1 damage"
+  font: "label"
+  id: "label"
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 218.0
+    y: 109.0
+  }
+  size {
+    x: 80.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "+5 timer"
+  font: "label"
+  id: "label1"
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 358.0
+    y: 66.0
+  }
+  size {
+    x: 65.0
+    y: 20.0
+  }
+  color {
+    x: 0.702
+    y: 0.4
+    z: 0.102
+  }
+  type: TYPE_BOX
+  id: "continue"
+  layer: "1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 358.0
+    y: 66.0
+  }
+  size {
+    x: 80.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "Next round"
+  font: "label"
+  id: "label_continue"
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 218.0
+    y: 95.0
+  }
+  size {
+    x: 80.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "5"
+  font: "label"
+  id: "timer_price"
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 304.0
+    y: 95.0
+  }
+  size {
+    x: 80.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "5"
+  font: "label"
+  id: "damage_price"
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 328.0
+    y: 125.0
+  }
+  size {
+    x: 40.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "label"
+  id: "damage_qty"
+  pivot: PIVOT_E
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 241.0
+    y: 125.0
+  }
+  size {
+    x: 40.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "label"
+  id: "timer_qty"
+  pivot: PIVOT_E
+  layer: "1"
+  inherit_alpha: true
+}
+layers {
+  name: "0"
+}
+layers {
+  name: "1"
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

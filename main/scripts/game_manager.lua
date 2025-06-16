@@ -1,13 +1,21 @@
 local status = {
-	level = 1,
-	gold = 0,
-	damage = 1,
-	timer = 1
+    level = 1,
+    gold = 100000,
+    damage = 1,
+    timer = 15
 }
 
 local shopping = {
-	damage = 10,
-	timer = 10
+    damage = {
+        qty = 0,
+        scale = 1.33,
+        price = 5
+    },
+    timer = {
+        qty = 0,
+        scale = 1.33,
+        price = 5
+    }
 }
 
 return {status = status, shopping = shopping}

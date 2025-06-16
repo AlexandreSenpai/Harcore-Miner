@@ -1,7 +1,7 @@
 script: "/main/scripts/main_menu.gui_script"
 fonts {
   name: "always_on_top"
-  font: "/assets/fonts/default.font"
+  font: "/assets/fonts/body.font"
 }
 textures {
   name: "player"
