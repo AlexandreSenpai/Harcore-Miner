@@ -5,9 +5,15 @@ function on_message(self, message_id, message, sender)
     end
     if message_id == hash("gameover") then
         display_gameover()
+        print("GAMEOVER")
     end
 end
 
 function display_gameover()
     msg.post("/hud#game_over", "load")
+    print("PERDEU PRA CARALHO")
 end
+
+-- function init(self)
+--     msg.post(".", "gameover")
+-- end

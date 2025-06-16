@@ -2,7 +2,7 @@ local status = {
     level = 1,
     gold = 100000,
     damage = 1,
-    timer = 15
+    timer = 3
 }
 
 local shopping = {
