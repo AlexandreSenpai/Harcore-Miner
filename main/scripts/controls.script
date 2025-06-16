@@ -50,6 +50,16 @@ function update(self, dt)
 	end
 end
 
+function on_message(self, message_id, message, sender)
+	if message_id == hash('set_position') then
+		set_position(self, message.new_position)
+	end
+end
+
+function set_position(self, position)
+	go.set_position(position)
+end
+
 -- Função para tocar um som de passo aleatório e reiniciar o timer
 function play_footstep_sound(self)
 	-- Escolhe um som aleatório da nossa tabela de sons

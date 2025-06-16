@@ -46,7 +46,7 @@ function on_input(self, action_id, action)
 		end
 
 		if gui.pick_node(self.continue, action.x, action.y) then
-			msg.post("/mining_blocks#mining_block_factory", "generate_map", { level = game_manager.status.level })
+			msg.post("/mining_blocks#mining_block_factory", "load_level", { level = game_manager.status.level })
 		end
 	end
 end

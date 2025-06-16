@@ -6,7 +6,7 @@ go.property("grid_width", 5)
 go.property("grid_height", 9)
 go.property("grid_gap", 1)
 go.property("anchor_point", vmath.vector3(224, 144, 0)) -- Y ajustado para gerar de cima para baixo
-go.property("current_stage", 1)
+go.property("current_level", 1)
 
 -- ======================================================
 -- MAPA DE BLOCOS COM FATORES DE ESCALA DINÂMICOS
@@ -142,9 +142,9 @@ function spawn_block(self, block_data, x, y)
 	)
 end
 
-function generate_map(self, stage)
+function generate_map(self, level)
 	-- 1. Calcula os dados e probabilidades para o estágio atual
-	local stage_blocks_data = get_block_data_for_stage(stage)
+	local stage_blocks_data = get_block_data_for_stage(level)
 
 	-- 2. Gera a grade de blocos
 	-- Usar loops de 0 a N-1 simplifica o cálculo de posição
@@ -160,6 +160,11 @@ function generate_map(self, stage)
 end
 
 function init(self)
-	math.randomseed(os.time())
-	generate_map(self, self.current_stage)
+	
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash('load_level') then
+		generate_map(self, message.level)
+	end
 end

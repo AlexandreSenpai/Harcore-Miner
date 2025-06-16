@@ -6,11 +6,18 @@ function init(self)
 end
 
 function update(self, dt)
+
+	if game_manager.status.paused then
+		return
+	end
+	
 	gui.set_text(self.gold_text, tostring(math.floor(game_manager.status.gold)))
 	game_manager.status.timer = game_manager.status.timer - 1 * dt
+	
 	if game_manager.status.timer <= 0 then
 		print("perdeu otario")
 	else
 		gui.set_text(self.timer_text, tostring(math.floor(game_manager.status.timer)))
 	end
+	
 end

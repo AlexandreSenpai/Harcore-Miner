@@ -87,3 +87,11 @@ embedded_instances {
   children: "footstep"
   data: ""
 }
+embedded_instances {
+  id: "managers"
+  data: "components {\n"
+  "  id: \"level_manager\"\n"
+  "  component: \"/main/scripts/level_manager.script\"\n"
+  "}\n"
+  ""
+}

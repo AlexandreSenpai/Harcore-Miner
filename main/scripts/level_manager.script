@@ -1,0 +1,39 @@
+local manager = require("main.scripts.game_manager")
+
+function init(self)
+	load_level(self, 1)
+end
+
+function update(self, dt)
+	local pos = go.get_position("/player")
+
+	if pos.y < 0 and manager.status.timer > 0 then
+		won_level(self)
+	end
+
+	if pos.y > 0 and manager.status.timer < 0 then
+		print("lancei a msg")
+		msg.post("/hud#game_over", "gameover", {})
+	end
+	
+end
+
+function won_level(self)
+	manager.status.level = manager.status.level + 1
+	if not manager.status.paused then
+		msg.post("/hud#shop", "handle_shop_display", {})
+	end
+	manager.status.paused = true
+end
+
+function load_level(self, level)
+	msg.post("/player#controls", "set_position", { new_position = vmath.vector3(210.37659, 152.53152, 1.0) })
+	msg.post("/mining_blocks#mining_block_factory", "load_level", { level=level })
+	manager.status.paused = false
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash('load_level') then
+		load_level(self, message.level)
+	end
+end
