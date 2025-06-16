@@ -81,7 +81,7 @@ nodes {
     y: 10.0
   }
   type: TYPE_TEXT
-  text: "+2 damage"
+  text: "+1 damage"
   font: "label"
   id: "label"
   layer: "1"
@@ -136,6 +136,38 @@ nodes {
   text: "Next round"
   font: "label"
   id: "label_continue"
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 218.0
+    y: 95.0
+  }
+  size {
+    x: 80.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "5"
+  font: "label"
+  id: "timer_price"
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 304.0
+    y: 95.0
+  }
+  size {
+    x: 80.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "5"
+  font: "label"
+  id: "damage_price"
   layer: "1"
   inherit_alpha: true
 }

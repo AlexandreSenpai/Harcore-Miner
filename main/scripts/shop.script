@@ -26,8 +26,8 @@ function handle_shop()
 	is_open = false
 end
 
--- function on_input(self, action_id, action)
--- 	if action_id == hash("down") and action.pressed then
--- 		msg.post(".", "handle_shop_display")
--- 	end
--- end
+function on_input(self, action_id, action)
+	if action_id == hash("down") and action.pressed then
+		msg.post(".", "handle_shop_display")
+	end
+end
