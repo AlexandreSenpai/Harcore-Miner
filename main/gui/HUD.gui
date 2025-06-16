@@ -27,6 +27,7 @@ nodes {
   position {
     x: 269.0
     y: 220.0
+    z: -0.5
   }
   size {
     x: 200.0

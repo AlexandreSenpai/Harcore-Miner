@@ -4,19 +4,9 @@ function init(self)
 
 end
 
-<<<<<<< HEAD
 function on_message(self, message_id, message, sender)
 	if message_id == hash('pressed') then
 		deal_damage(self, { url = message.id, x = message.x, y = message.y }, self.damage)
-=======
-function increase_str(amount)
-	status.str = status.str + amount
-end
-
-function on_input(self, action_id, action)
-	if action_id == hash("down") then
-		increase_str(1)
->>>>>>> OGRANDEPOCCAFODA
 	end
 end
 
