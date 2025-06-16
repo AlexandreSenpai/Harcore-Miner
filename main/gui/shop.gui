@@ -171,6 +171,42 @@ nodes {
   layer: "1"
   inherit_alpha: true
 }
+nodes {
+  position {
+    x: 328.0
+    y: 125.0
+  }
+  size {
+    x: 40.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "label"
+  id: "damage_qty"
+  pivot: PIVOT_E
+  layer: "1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 241.0
+    y: 125.0
+  }
+  size {
+    x: 40.0
+    y: 10.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "label"
+  id: "timer_qty"
+  pivot: PIVOT_E
+  layer: "1"
+  inherit_alpha: true
+}
 layers {
   name: "0"
 }

@@ -8,12 +8,17 @@ function init(self)
 	self.damage_price = gui.get_node("damage_price")
 	self.timer_price = gui.get_node("timer_price")
 
+	self.damage_qty = gui.get_node("damage_qty")
+	self.timer_qty = gui.get_node("timer_qty")
+
 	msg.post(".", "acquire_input_focus")
 end
 
 function update(self, dt)
 	gui.set_text(self.damage_price, tostring(math.floor(game_manager.shopping.damage.price)))
 	gui.set_text(self.timer_price, tostring(math.floor(game_manager.shopping.timer.price)))
+	gui.set_text(self.damage_qty, tostring(game_manager.shopping.damage.qty))
+	gui.set_text(self.timer_qty, tostring(game_manager.shopping.timer.qty))
 end
 
 function on_input(self, action_id, action)
@@ -25,6 +30,7 @@ function on_input(self, action_id, action)
 				game_manager.shopping.damage.price = (
 					game_manager.shopping.damage.price + (game_manager.shopping.damage.qty * game_manager.shopping.damage.scale)
 				)
+				game_manager.status.damage = game_manager.status.damage + 1
 			end
 		end
 
@@ -35,6 +41,7 @@ function on_input(self, action_id, action)
 				game_manager.shopping.timer.price = (
 					game_manager.shopping.timer.price + (game_manager.shopping.timer.qty * game_manager.shopping.timer.scale)
 				)
+				game_manager.status.timer = game_manager.status.timer + 5
 			end
 		end
 
