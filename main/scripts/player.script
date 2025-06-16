@@ -8,7 +8,6 @@ end
 
 function increase_str(amount)
 	status.str = status.str + amount
-	print(status.str)
 end
 
 function on_input(self, action_id, action)

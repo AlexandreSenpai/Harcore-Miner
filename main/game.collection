@@ -1,0 +1,89 @@
+name: "main"
+instances {
+  id: "player"
+  prototype: "/main/game_objects/player.go"
+  position {
+    x: 257.3766
+    y: 170.53152
+    z: 1.0
+  }
+}
+instances {
+  id: "cursor"
+  prototype: "/main/game_objects/cursor.go"
+}
+instances {
+  id: "footstep"
+  prototype: "/main/game_objects/footstep.go"
+}
+scale_along_z: 0
+embedded_instances {
+  id: "environment"
+  children: "background"
+  children: "mining_blocks"
+  children: "sounds"
+  data: ""
+}
+embedded_instances {
+  id: "mining_blocks"
+  data: "components {\n"
+  "  id: \"mining_block_factory\"\n"
+  "  component: \"/main/scripts/mining_block_factory.script\"\n"
+  "  properties {\n"
+  "    id: \"grid_gap\"\n"
+  "    value: \"0.0\"\n"
+  "    type: PROPERTY_TYPE_NUMBER\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"block_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/main/game_objects/mining_blocks/block_base.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "background"
+  data: "components {\n"
+  "  id: \"background\"\n"
+  "  component: \"/assets/tiles/background.tilemap\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/assets/tiles/background.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"default\\\"\\n"
+  "mask: \\\"world\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "hud"
+  children: "cursor"
+  data: "components {\n"
+  "  id: \"shop\"\n"
+  "  component: \"/main/scripts/shop.script\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"HUD\"\n"
+  "  component: \"/main/gui/HUD.gui\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"shop_interface\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/main/shop.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "sounds"
+  children: "footstep"
+  data: ""
+}

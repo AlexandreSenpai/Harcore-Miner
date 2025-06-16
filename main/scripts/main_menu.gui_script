@@ -1,6 +1,9 @@
+local game_manager = require("main.scripts.game_manager")
+
 function init(self)
 	local text_node = gui.get_node("text")
 	local text_angle = 2
+
 	msg.post(".", "acquire_input_focus")
 
 	gui.animate(text_node,"scale",vmath.vector4(1.05, 1.05, 1, 1),gui.EASING_INCUBIC,1,0,nil,gui.PLAYBACK_LOOP_PINGPONG)

@@ -1,8 +1,11 @@
+local game_manager = require("main.scripts.game_manager")
+
 go.property("speed", 100)
 go.property("footstep_cooldown", 0.3) -- O tempo em segundos entre cada som de passo
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+
 	self.velocity = vmath.vector3(0, 0, 0)
 	self.current_animation = hash("idle")
 

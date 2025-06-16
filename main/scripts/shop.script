@@ -1,0 +1,33 @@
+local is_open = false
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("proxy_loaded") then
+		msg.post(sender, "enable")
+		msg.post(sender, "acquire_input_focus")
+	end
+
+	if message_id == hash("handle_shop_display") then
+		handle_shop()
+	end
+end
+
+function handle_shop()
+	if not is_open then
+		msg.post("/hud#shop_interface", "load")
+		is_open = true
+		return
+	end
+
+	msg.post("/hud#shop_interface", "unload")
+	is_open = false
+end
+
+-- function on_input(self, action_id, action)
+-- 	if action_id == hash("down") and action.pressed then
+-- 		msg.post(".", "handle_shop_display")
+-- 	end
+-- end

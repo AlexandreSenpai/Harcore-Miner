@@ -1,0 +1,16 @@
+local game_manager = require("main.scripts.game_manager")
+
+function init(self)
+	self.gold_text = gui.get_node("gold")
+	self.timer_text = gui.get_node("timer")
+end
+
+function update(self, dt)
+	gui.set_text(self.gold_text, tostring(game_manager.status.gold))
+	game_manager.status.timer = game_manager.status.timer - 1 * dt
+	if game_manager.status.timer <= 0 then
+		print("perdeu otario")
+	else
+		gui.set_text(self.timer_text, tostring(math.floor(game_manager.status.timer)))
+	end
+end

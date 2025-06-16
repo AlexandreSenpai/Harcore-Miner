@@ -1,0 +1,7 @@
+images {
+  image: "/assets/images/HUD/damage.png"
+}
+images {
+  image: "/assets/images/HUD/timer.png"
+}
+extrude_borders: 2
