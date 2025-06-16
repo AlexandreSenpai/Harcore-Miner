@@ -2,6 +2,7 @@ local is_open = false
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	-- msg.post("/hud#gameover", "gameover")
 end
 
 function on_message(self, message_id, message, sender)

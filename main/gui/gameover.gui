@@ -1,0 +1,75 @@
+script: "/main/scripts/gameover.gui_script"
+fonts {
+  name: "body"
+  font: "/assets/fonts/body.font"
+}
+nodes {
+  position {
+    x: 257.0
+    y: 150.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.063
+    y: 0.059
+    z: 0.098
+  }
+  type: TYPE_BOX
+  id: "box"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 259.0
+    y: 173.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game over"
+  font: "body"
+  id: "text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 261.0
+    y: 131.0
+  }
+  size {
+    x: 80.0
+    y: 20.0
+  }
+  color {
+    x: 0.702
+    y: 0.4
+    z: 0.102
+  }
+  type: TYPE_BOX
+  id: "retry"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 258.0
+    y: 131.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Retry"
+  font: "body"
+  id: "text1"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

@@ -1,4 +1,5 @@
 local game_manager = require("main.scripts.game_manager")
+local lost = false
 
 function init(self)
 	self.gold_text = gui.get_node("gold")
@@ -15,7 +16,10 @@ function update(self, dt)
 	game_manager.status.timer = game_manager.status.timer - 1 * dt
 	
 	if game_manager.status.timer <= 0 then
-		print("perdeu otario")
+		if lost == false then
+			msg.post("/hud#gameover", "gameover")
+			lost = true
+		end
 	else
 		gui.set_text(self.timer_text, tostring(math.floor(game_manager.status.timer)))
 	end

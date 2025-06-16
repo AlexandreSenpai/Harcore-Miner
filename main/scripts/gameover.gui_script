@@ -1,0 +1,12 @@
+function init(self)
+	self.retry = gui.get_node("retry")
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") then
+		if gui.pick_node(self.retry, action.x, action.y) then
+			msg.post("/managers#level_manager", "load_level", {level = 1})
+		end
+	end
+end

@@ -1,0 +1,19 @@
+function on_message(self, message_id, message, sender)
+    if message_id == hash("proxy_loaded") then
+        msg.post(sender, "enable")
+        msg.post(sender, "acquire_input_focus")
+    end
+    if message_id == hash("gameover") then
+        display_gameover()
+        print("GAMEOVER")
+    end
+end
+
+function display_gameover()
+    msg.post("/hud#game_over", "load")
+    print("PERDEU PRA CARALHO")
+end
+
+-- function init(self)
+--     msg.post(".", "gameover")
+-- end
