@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.13)
+
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
+
+project(CaveMiner)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 20)
+
+find_package(raylib CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(boost_uuid CONFIG REQUIRED)
+find_package(RmlUi CONFIG REQUIRED)
+
+file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp)
+file(GLOB_RECURSE THIRDPARTY_SOURCES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/include/thirdParty/*.cpp)
+
+add_executable(${PROJECT_NAME} ${MY_SOURCES} ${THIRDPARTY_SOURCES})
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    raylib 
+    imgui::imgui 
+    RmlUi::RmlUi
+    Boost::uuid
+)

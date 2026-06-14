@@ -1,0 +1,122 @@
+{
+    "__header__": {
+        "fileType": "Hardcore Miner Blocks Metadata",
+        "app": "Hardcore Miner"
+    },
+    "blocks": [
+        {
+            "name": "Stone Block",
+            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "textureRow": 5,
+            "totalFrames": 6,
+            "isSolid": true,
+            "baseProbability": 80.0,
+            "probabilityShift": -1.0,
+            "baseDurability": 1.0,
+            "durabilityScale": 1.10,
+            "baseReward": 1,
+            "rewardScale": 1.08,
+            "frameTint": [
+                128,
+                128,
+                128,
+                255
+            ]
+        },
+        {
+            "name": "White Block",
+            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "textureRow": 6,
+            "totalFrames": 6,
+            "isSolid": true,
+            "baseProbability": 10.0,
+            "probabilityShift": 0.5,
+            "baseDurability": 2.0,
+            "durabilityScale": 1.12,
+            "baseReward": 5,
+            "rewardScale": 1.15,
+            "frameTint": [
+                255,
+                255,
+                255,
+                255
+            ]
+        },
+        {
+            "name": "Red Block",
+            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "textureRow": 4,
+            "totalFrames": 6,
+            "isSolid": true,
+            "baseProbability": 3.0,
+            "probabilityShift": 0.1,
+            "baseDurability": 3.0,
+            "durabilityScale": 1.15,
+            "baseReward": 15,
+            "rewardScale": 1.20,
+            "frameTint": [
+                255,
+                0,
+                0,
+                255
+            ]
+        },
+        {
+            "name": "Green Block",
+            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "textureRow": 2,
+            "totalFrames": 6,
+            "isSolid": true,
+            "baseProbability": 3.0,
+            "probabilityShift": 0.1,
+            "baseDurability": 3.0,
+            "durabilityScale": 1.15,
+            "baseReward": 15,
+            "rewardScale": 1.20,
+            "frameTint": [
+                0,
+                255,
+                0,
+                255
+            ]
+        },
+        {
+            "name": "Blue Block",
+            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "textureRow": 1,
+            "totalFrames": 5,
+            "isSolid": true,
+            "baseProbability": 3.0,
+            "probabilityShift": 0.1,
+            "baseDurability": 3.0,
+            "durabilityScale": 1.15,
+            "baseReward": 15,
+            "rewardScale": 1.20,
+            "frameTint": [
+                0,
+                0,
+                255,
+                255
+            ]
+        },
+        {
+            "name": "Pink Block",
+            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "textureRow": 3,
+            "totalFrames": 6,
+            "isSolid": true,
+            "baseProbability": 1.0,
+            "probabilityShift": 0.2,
+            "baseDurability": 5.0,
+            "durabilityScale": 1.25,
+            "baseReward": 50,
+            "rewardScale": 1.28,
+            "frameTint": [
+                255,
+                0,
+                255,
+                255
+            ]
+        }
+    ]
+}

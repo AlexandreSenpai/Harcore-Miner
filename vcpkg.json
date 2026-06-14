@@ -1,0 +1,9 @@
+{
+  "name": "cave-miner",
+  "dependencies": [
+    "imgui",
+    "raylib",
+    "rmlui",
+    "boost-uuid"
+  ]
+}

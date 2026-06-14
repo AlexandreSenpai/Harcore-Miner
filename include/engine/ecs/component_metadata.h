@@ -1,0 +1,15 @@
+#pragma once
+
+enum ComponentType {
+  COMPONENT,
+  STATE_MACHINE,
+  TEXTURE,
+  MOVE_2D,
+  CAMERA,
+  COLLIDER,
+  RIGIDBODY_2D,
+  CIRCLE_COLLIDER,
+  HEALTH,
+  ATTACK,
+  BLOCK_HIGHLIGHT
+};

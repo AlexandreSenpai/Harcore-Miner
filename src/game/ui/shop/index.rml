@@ -1,0 +1,58 @@
+<rml>
+
+    <head>
+        <title>Shop</title>
+        <link rel="stylesheet" type="text/css" href="./styles.css" />
+    </head>
+
+    <body>
+        <div id="shop-overlay">
+            <div id="shop-panel">
+                <div id="shop-header">
+                    <p class="shop-title">SHOP</p>
+                    <div id="shop-money">
+                        <p id="shop-money-value">0</p>
+                    </div>
+                </div>
+
+                <div id="shop-items">
+                    <div class="shop-card" id="augment-0">
+                        <p class="card-name">---</p>
+                        <p class="card-desc">---</p>
+                        <div class="card-cost">
+                            <p class="card-cost-value">0</p>
+                        </div>
+                    </div>
+                    <div class="shop-card" id="augment-1">
+                        <p class="card-name">---</p>
+                        <p class="card-desc">---</p>
+                        <div class="card-cost">
+                            <p class="card-cost-value">0</p>
+                        </div>
+                    </div>
+                    <div class="shop-card" id="augment-2">
+                        <p class="card-name">---</p>
+                        <p class="card-desc">---</p>
+                        <div class="card-cost">
+                            <p class="card-cost-value">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="shop-actions">
+                    <div class="shop-btn" id="buy-time-btn">
+                        <p>Buy Time (+10s)</p>
+                        <p class="btn-cost">30</p>
+                    </div>
+                    <div class="shop-btn" id="reroll-btn">
+                        <p>Reroll Augments</p>
+                        <p class="btn-cost">20</p>
+                    </div>
+                    <div class="shop-btn shop-btn-skip" id="skip-btn">
+                        <p>Skip</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</rml>
