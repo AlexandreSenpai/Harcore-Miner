@@ -109,7 +109,7 @@ CircleColliderComponent::CheckLevelCollision(Vector2 *predictedCenter) {
   for (Rectangle &tile : tiles) {
     if (this->CheckCollisionRec(center, tile)) {
       result.type = CollisionType::ENVIRONMENT_COLLISION;
-      result.otherTile = &tile;
+      result.otherTile = tile;
       result.selfEntity = this->entity;
       result.hasCollided = true;
       return result;

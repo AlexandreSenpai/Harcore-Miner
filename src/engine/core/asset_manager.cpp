@@ -26,10 +26,33 @@ std::string AssetManager::GetResourcePath(const std::string &path) {
   }
 
   std::filesystem::path p(normalized);
+  if (p.is_absolute()) {
+    return normalized;
+  }
+
   if (std::filesystem::exists(p)) {
     return normalized;
   }
 
+  // Check relative to the application directory (where the executable lives)
+  std::filesystem::path appDir(::GetApplicationDirectory());
+  
+  std::filesystem::path attemptApp1 = appDir / p;
+  if (std::filesystem::exists(attemptApp1)) {
+    return attemptApp1.string();
+  }
+
+  std::filesystem::path attemptApp2 = appDir / ".." / p;
+  if (std::filesystem::exists(attemptApp2)) {
+    return attemptApp2.string();
+  }
+
+  std::filesystem::path attemptApp3 = appDir / ".." / ".." / p;
+  if (std::filesystem::exists(attemptApp3)) {
+    return attemptApp3.string();
+  }
+
+  // Fallback to checking relative to current working directory
   std::filesystem::path attempt2 = std::filesystem::current_path() / ".." / p;
   if (std::filesystem::exists(attempt2)) {
     return attempt2.string();

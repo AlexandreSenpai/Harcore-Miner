@@ -33,14 +33,6 @@ void RigidBody2DComponent::Update() {
   float dt = GetFrameTime();
   if (dt > 0.05f)
     dt = 0.05f;
-  if ((this->IsGrounded() && this->velocity.y > 0) || this->hasJumped) {
-    this->isGroundedReleaseTimer += dt;
-    if (this->isGroundedReleaseTimer > 0.25f) {
-      this->isGrounded = false;
-      this->isGroundedReleaseTimer = 0.0f;
-      this->hasJumped = false;
-    }
-  }
 
   if (collider == nullptr || !collider->IsEnabled()) {
     // If entity has no collider, just move and return
@@ -49,47 +41,54 @@ void RigidBody2DComponent::Update() {
     return;
   }
 
-  // If entity is trying to move horizontally let's check for collisions
+  // --- RESOLUÇÃO DO EIXO X ---
   if (this->velocity.x != 0.0f) {
     float deltaX = this->velocity.x * dt;
 
     Rectangle nextPosition = collider->GetWorldBounds();
     nextPosition.x += deltaX;
+    
+    // Inset vertically to prevent colliding with floors/ceilings
+    nextPosition.y += 0.05f;
+    nextPosition.height -= 0.10f;
 
     CollisionResult collision = collider->EvaluateCollisions(&nextPosition);
-    pos->x += deltaX;
 
     if (collision.hasCollided && collider->IsSolid()) {
-      if (this->velocity.x > 0)
-        pos->x -= collision.overlap.width;
-      else
-        pos->x += collision.overlap.width;
-
-      this->velocity.x = 0;
+      if (deltaX > 0.0f) {
+        pos->x += deltaX - collision.overlap.width;
+      } else {
+        pos->x += deltaX + collision.overlap.width;
+      }
+      this->velocity.x = 0.0f;
+    } else {
+      pos->x += deltaX;
     }
   }
 
   // --- RESOLUÇÃO DO EIXO Y ---
-  if (this->velocity.y != 0.0f) {
-    float deltaY = this->velocity.y * dt;
-
+  float deltaY = this->velocity.y * dt;
+  if (deltaY != 0.0f) {
     Rectangle nextPosition = collider->GetWorldBounds();
     nextPosition.y += deltaY;
+    
+    // Inset horizontally to prevent colliding with walls
+    nextPosition.x += 0.05f;
+    nextPosition.width -= 0.10f;
 
     CollisionResult collision = collider->EvaluateCollisions(&nextPosition);
-    pos->y += deltaY;
 
     if (collision.hasCollided && collider->IsSolid()) {
-      if (this->velocity.y > 0) {
-        pos->y -= collision.overlap.height;
+      if (deltaY > 0.0f) {
+        pos->y += deltaY - collision.overlap.height;
         this->isGrounded = true;
       } else {
-        pos->y += collision.overlap.height;
+        pos->y += deltaY + collision.overlap.height;
       }
-
-      this->velocity.y = 0;
+      this->velocity.y = 0.0f;
     } else {
-      this->hasJumped = true;
+      pos->y += deltaY;
+      this->isGrounded = false;
     }
   }
 }

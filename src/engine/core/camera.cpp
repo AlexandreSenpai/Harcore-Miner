@@ -59,29 +59,26 @@ void GameCamera::ClampToLevelBounds() {
 
   // If the level is smaller than the viewport, center it
   if (minX > maxX) {
-    camera.target.x = bounds.x + bounds.width / 2.0f;
+    camera.target.x = static_cast<int>(bounds.x + bounds.width / 2.0f);
   } else {
     if (camera.target.x < minX)
-      camera.target.x = minX;
+      camera.target.x = static_cast<int>(minX);
     if (camera.target.x > maxX)
-      camera.target.x = maxX;
+      camera.target.x = static_cast<int>(maxX);
   }
 
   if (minY > maxY) {
-    camera.target.y = bounds.y + bounds.height / 2.0f;
+    camera.target.y = static_cast<int>(bounds.y + bounds.height / 2.0f);
   } else {
     if (camera.target.y < minY)
-      camera.target.y = minY;
+      camera.target.y = static_cast<int>(minY);
     if (camera.target.y > maxY)
-      camera.target.y = maxY;
+      camera.target.y = static_cast<int>(maxY);
   }
 }
 
 void GameCamera::Begin() {
-  Camera2D renderCam = camera;
-  renderCam.target.x = std::floor(renderCam.target.x);
-  renderCam.target.y = std::floor(renderCam.target.y);
-  BeginMode2D(renderCam);
+  BeginMode2D(camera);
 }
 
 void GameCamera::End() { EndMode2D(); }

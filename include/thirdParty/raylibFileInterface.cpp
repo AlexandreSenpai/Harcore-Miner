@@ -1,33 +1,12 @@
 #include "raylibFileInterface.h"
+#include "engine/core/asset_manager.h"
 #include <RmlUi/Core/Log.h>
 #include <filesystem>
 #include <fstream>
 
 
 Rml::FileHandle CustomFileInterface::Open(const Rml::String &path) {
-  std::filesystem::path p(path);
-  std::string finalPath = p.string();
-
-  // If it's a relative path, assume it's relative to the project root (or
-  // wherever the executable runs) Raylib's GetWorkingDirectory() or simple
-  // relative assumes the CWD. We'll rely on the standard `../` parsing if
-  // needed, but simple `assets/` relative works best if we're running from
-  // `build/`. Let's resolve against the current working directory cleanly:
-  if (!p.is_absolute()) {
-    // Since we run in build/, "assets/ui/hello.rml" actually means
-    // "../assets/ui/hello.rml" We'll let the user provide paths like
-    // "../assets/" explicitly or dynamically parse. Let's just try to open it
-    // exactly as supplied first, and if it fails, try prepending "../" assuming
-    // running from build.
-    std::filesystem::path attempt1 = p;
-    if (!std::filesystem::exists(attempt1)) {
-      std::filesystem::path attempt2 =
-          std::filesystem::current_path() / ".." / p;
-      if (std::filesystem::exists(attempt2)) {
-        finalPath = attempt2.string();
-      }
-    }
-  }
+  std::string finalPath = AssetManager::GetResourcePath(path);
 
   auto stream = new std::fstream(finalPath, std::ios::in | std::ios::binary);
 
