@@ -1,6 +1,8 @@
 #include "engine/ecs/texture.h"
 #include "engine/core/asset_manager.h"
 #include "engine/ecs/entity.h"
+#include "engine/core/scene.h"
+#include "engine/managers/scene_manager.h"
 #include <cmath>
 #include <imgui.h>
 #include <iostream>
@@ -53,7 +55,13 @@ void TextureComponent::Draw() {
     sourceRec.height = -sourceRec.height;
   }
 
-  Vector2 position = {pos->x, pos->y};
+  IScene *currentScene = SceneManager::GetInstance()->GetCurrentScene();
+  float zoom = 1.0f;
+  if (currentScene != nullptr) {
+    zoom = currentScene->GetCamera().GetZoom();
+  }
+  Vector2 position = {std::round(pos->x * zoom) / zoom,
+                      std::round(pos->y * zoom) / zoom};
 
   if (!this->currentShaderPath.empty()) {
     ::BeginShaderMode(this->shader);
