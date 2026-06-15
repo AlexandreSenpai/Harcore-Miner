@@ -110,7 +110,7 @@ ColliderComponent::CheckLevelCollision(Rectangle *entityColliderBounds) const {
     if (this->CheckCollision(bounds, tile, overlap)) {
       result.type = CollisionType::ENVIRONMENT_COLLISION;
       result.overlap = overlap;
-      result.otherTile = &tile;
+      result.otherTile = tile;
       result.selfEntity = this->entity;
       result.hasCollided = true;
 

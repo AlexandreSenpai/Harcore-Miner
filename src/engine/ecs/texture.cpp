@@ -53,7 +53,7 @@ void TextureComponent::Draw() {
     sourceRec.height = -sourceRec.height;
   }
 
-  Vector2 position = {std::floor(pos->x), std::floor(pos->y)};
+  Vector2 position = {pos->x, pos->y};
 
   if (!this->currentShaderPath.empty()) {
     ::BeginShaderMode(this->shader);

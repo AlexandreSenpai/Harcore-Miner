@@ -9,7 +9,7 @@ enum CollisionType { ENVIRONMENT_COLLISION, ENTITY_COLLISION };
 struct CollisionResult {
   CollisionType type;
   Rectangle overlap;
-  Rectangle *otherTile;
+  Rectangle otherTile;
   IEntity *otherEntity;
   IEntity *selfEntity;
   bool hasCollided;
