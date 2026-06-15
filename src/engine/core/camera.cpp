@@ -78,7 +78,10 @@ void GameCamera::ClampToLevelBounds() {
 }
 
 void GameCamera::Begin() {
-  BeginMode2D(camera);
+  Camera2D renderCam = camera;
+  renderCam.target.x = std::round(renderCam.target.x * camera.zoom) / camera.zoom;
+  renderCam.target.y = std::round(renderCam.target.y * camera.zoom) / camera.zoom;
+  BeginMode2D(renderCam);
 }
 
 void GameCamera::End() { EndMode2D(); }
