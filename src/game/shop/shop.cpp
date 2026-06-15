@@ -23,7 +23,7 @@ Shop::Shop(Rml::ElementDocument *doc, Timer *timer) : IEntity("Shop") {
       [this](void *data) { this->OnMoneyChanged(data); });
 }
 
-Shop::~Shop() { IEntity::~IEntity(); }
+Shop::~Shop() {}
 
 void Shop::Update() {
   if (!this->isOpen || !this->document)

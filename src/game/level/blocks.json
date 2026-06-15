@@ -6,7 +6,7 @@
     "blocks": [
         {
             "name": "Stone Block",
-            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "texturePath": "src/game/assets/tilesets/environment/block_anim.png",
             "textureRow": 5,
             "totalFrames": 6,
             "isSolid": true,
@@ -25,7 +25,7 @@
         },
         {
             "name": "White Block",
-            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "texturePath": "src/game/assets/tilesets/environment/block_anim.png",
             "textureRow": 6,
             "totalFrames": 6,
             "isSolid": true,
@@ -44,7 +44,7 @@
         },
         {
             "name": "Red Block",
-            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "texturePath": "src/game/assets/tilesets/environment/block_anim.png",
             "textureRow": 4,
             "totalFrames": 6,
             "isSolid": true,
@@ -63,7 +63,7 @@
         },
         {
             "name": "Green Block",
-            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "texturePath": "src/game/assets/tilesets/environment/block_anim.png",
             "textureRow": 2,
             "totalFrames": 6,
             "isSolid": true,
@@ -82,7 +82,7 @@
         },
         {
             "name": "Blue Block",
-            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "texturePath": "src/game/assets/tilesets/environment/block_anim.png",
             "textureRow": 1,
             "totalFrames": 5,
             "isSolid": true,
@@ -101,7 +101,7 @@
         },
         {
             "name": "Pink Block",
-            "texturePath": "C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\tilesets\\environment\\block_anim.png",
+            "texturePath": "src/game/assets/tilesets/environment/block_anim.png",
             "textureRow": 3,
             "totalFrames": 6,
             "isSolid": true,

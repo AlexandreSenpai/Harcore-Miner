@@ -1,4 +1,5 @@
 #include "engine/level/level_generator.h"
+#include "engine/core/asset_manager.h"
 #include "thirdParty/json.hpp"
 #include <fstream>
 #include <iostream>
@@ -12,7 +13,7 @@ LevelGenerator::LevelGenerator(const char *levelPath) {
 LevelGenerator::~LevelGenerator() {}
 
 void LevelGenerator::LoadWorldFile() {
-  std::ifstream file(this->levelPath);
+  std::ifstream file(AssetManager::GetResourcePath(this->levelPath));
   if (!file.is_open()) {
     std::cerr << "Error opening level file: " << this->levelPath << std::endl;
     return;

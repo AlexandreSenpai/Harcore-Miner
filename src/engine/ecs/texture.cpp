@@ -1,6 +1,7 @@
 #include "engine/ecs/texture.h"
 #include "engine/core/asset_manager.h"
 #include "engine/ecs/entity.h"
+#include <cmath>
 #include <imgui.h>
 #include <iostream>
 #include <raylib.h>
@@ -19,7 +20,6 @@ TextureComponent::TextureComponent(IEntity *entity, const char *texturePath,
 
 TextureComponent::~TextureComponent() {
   this->RemoveShader();
-  IComponent::~IComponent();
 }
 
 void TextureComponent::Draw() {

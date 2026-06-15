@@ -9,6 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(raylib CONFIG REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(boost_uuid CONFIG REQUIRED)
 find_package(RmlUi CONFIG REQUIRED)
@@ -20,9 +21,10 @@ add_executable(${PROJECT_NAME} ${MY_SOURCES} ${THIRDPARTY_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    raylib 
-    imgui::imgui 
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    raylib
+    glfw
+    imgui::imgui
     RmlUi::RmlUi
     Boost::uuid
 )

@@ -14,6 +14,8 @@ private:
 public:
   static AssetManager *GetInstance();
 
+  static std::string GetResourcePath(const std::string &path);
+
   Texture2D LoadTexture(const char *path);
   void UnloadTexture(const char *path);
 

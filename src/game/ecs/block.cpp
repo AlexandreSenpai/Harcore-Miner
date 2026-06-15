@@ -25,7 +25,7 @@ Block::Block(float maxHealth, int reward) : IEntity("Block") {
   this->reward = reward;
 };
 
-Block::~Block() { IEntity::~IEntity(); };
+Block::~Block() {};
 
 void Block::Update() {
   IEntity::Update();

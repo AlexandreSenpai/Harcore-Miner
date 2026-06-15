@@ -1,5 +1,6 @@
 #include "game/level/stage_manager.h"
 #include "engine/core/scene.h"
+#include "engine/core/asset_manager.h"
 #include "game/ecs/block.h"
 #include "game/factories/block_factory.h"
 #include "game/level/timer.h"
@@ -17,8 +18,7 @@ StageManager::StageManager(IScene *scene, IEntity *player, Timer *timer)
   this->scene = scene;
   this->timer = timer;
 
-  std::ifstream file("C:\\Users\\alexa\\scripts\\games\\Cave "
-                     "Miner\\src\\game\\level\\blocks.json");
+  std::ifstream file(AssetManager::GetResourcePath("src/game/level/blocks.json"));
 
   if (!file.is_open()) {
     std::cerr << "Error opening blocks json file" << std::endl;
@@ -41,7 +41,7 @@ StageManager::StageManager(IScene *scene, IEntity *player, Timer *timer)
       [this](void *data) { this->OnShopClosed(data); });
 };
 
-StageManager::~StageManager() { IEntity::~IEntity(); };
+StageManager::~StageManager() {};
 
 void StageManager::Update() {
   if (this->pendingStageReset) {

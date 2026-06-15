@@ -11,7 +11,7 @@ MainHud::MainHud(Rml::ElementDocument *doc) : IEntity("MainHud") {
       [this](void *data) { this->OnStageChanged(data); });
 }
 
-MainHud::~MainHud() { IEntity::~IEntity(); }
+MainHud::~MainHud() {}
 
 void MainHud::Update() { IEntity::Update(); }
 

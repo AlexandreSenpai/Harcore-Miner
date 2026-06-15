@@ -12,7 +12,7 @@ class Block : public IEntity {
 private:
   HealthComponent *health;
   TextureComponent *texture;
-  AnimationResult destroyAnimationResult;
+  AnimationResult destroyAnimationResult = {AnimationPlaybackState::PLAYING, 0};
   int reward = 0;
   bool rewardDispatched = false;
 

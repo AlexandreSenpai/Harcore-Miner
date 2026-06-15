@@ -13,7 +13,7 @@ StateManager::StateManager() : IEntity("StateManager") {
       [this](void *data) { this->OnPurchase(data); });
 }
 
-StateManager::~StateManager() { IEntity::~IEntity(); };
+StateManager::~StateManager() {};
 
 void StateManager::Update() { IEntity::Update(); }
 

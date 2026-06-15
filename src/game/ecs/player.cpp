@@ -19,8 +19,7 @@ Player::Player() : IEntity("Player") {
   texture->AddAnimation(
       "idle",
       {
-          .texturePath = "C:\\Users\\alexa\\scripts\\games\\Cave "
-                         "Miner\\src\\game\\assets\\Player\\player_anim.png",
+          .texturePath = "src/game/assets/Player/player_anim.png",
           .frameRow = 0,
           .totalFrames = 2,
           .frameSize = 16,
@@ -29,8 +28,7 @@ Player::Player() : IEntity("Player") {
   texture->AddAnimation(
       "running",
       {
-          .texturePath = "C:\\Users\\alexa\\scripts\\games\\Cave "
-                         "Miner\\src\\game\\assets\\Player\\player_anim.png",
+          .texturePath = "src/game/assets/Player/player_anim.png",
           .frameRow = 1,
           .totalFrames = 2,
           .frameSize = 16,
@@ -43,7 +41,7 @@ Player::Player() : IEntity("Player") {
   this->AddComponent(texture);
 };
 
-Player::~Player() { IEntity::~IEntity(); };
+Player::~Player() {};
 
 void Player::Update() { IEntity::Update(); };
 

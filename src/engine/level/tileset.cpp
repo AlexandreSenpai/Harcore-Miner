@@ -1,7 +1,10 @@
 #include "engine/level/tileset.h"
+#include "engine/core/asset_manager.h"
 #include <raylib.h>
 
-Tileset::Tileset(const char *path) { this->texture = ::LoadTexture(path); }
+Tileset::Tileset(const char *path) {
+  this->texture = ::LoadTexture(AssetManager::GetResourcePath(path).c_str());
+}
 
 Tileset::~Tileset() {
   if (this->ownsTexture) {

@@ -16,7 +16,7 @@
                 </div>
                 <div class="top-bar-item">
                     <div class="money-counter-icon">
-                        <img src="C:\\Users\\alexa\\scripts\\games\\Cave Miner\\src\\game\\assets\\coin.png"
+                        <img src="../../assets/coin.png"
                             alt="Money" />
                     </div>
                     <div class="money-counter-value" id="money-counter-value">
