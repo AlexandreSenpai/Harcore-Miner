@@ -62,3 +62,5 @@ public:
   virtual void Update() = 0;
   virtual void Draw();
 };
+
+extern bool gShowDebugColliders;

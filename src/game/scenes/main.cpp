@@ -55,11 +55,6 @@ MainScene::MainScene() : IScene("Main Scene") {
 MainScene::~MainScene() { delete this->levelGenerator; }
 
 void MainScene::Update() {
-  if (IsKeyPressed(KEY_F1)) {
-    this->levelGenerator->SetShowDebugCollisions(
-        !this->levelGenerator->GetShowDebugCollisions());
-  }
-
   if (::IsWindowResized()) {
     this->GetCamera().SetBounds(1, 1, this->levelGenerator->GetLevelWidth(),
                                 this->levelGenerator->GetLevelHeight());

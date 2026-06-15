@@ -177,7 +177,7 @@ void CircleColliderComponent::Draw() {
     return;
 
   Vector2 center = this->GetWorldCenter();
-  if (this->showDebugCollisions) {
+  if (gShowDebugColliders) {
     // Usa verde se for um Trigger/Área de Ataque, vermelho se for parede
     Color colColor = this->isSolid ? RED : GREEN;
     ::DrawCircleLines(center.x, center.y, this->radius, colColor);
@@ -187,9 +187,6 @@ void CircleColliderComponent::Draw() {
 void CircleColliderComponent::Update() {
   if (!this->IsEnabled())
     return;
-
-  if (IsKeyPressed(KEY_F1))
-    this->showDebugCollisions = !this->showDebugCollisions;
 }
 
 void CircleColliderComponent::Debug() {
