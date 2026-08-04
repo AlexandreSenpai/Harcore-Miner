@@ -1,14 +1,16 @@
 #include "game/shop/shop.h"
+#include "engine/events/event_system.h"
 #include "game/level/timer.h"
+#include "game/shop/skill.h"
 #include "game/ui/main_hud.h"
-#include <algorithm>
 #include <iostream>
+#include <memory>
 #include <raylib.h>
 
 Shop::Shop(Rml::ElementDocument *doc, Timer *timer) : IEntity("Shop") {
   this->document = doc;
   this->timer = timer;
-  this->allAugments = GetAllAugments();
+  this->allSkills = GetAllSkills();
 
   // Start hidden
   if (this->document) {
@@ -46,19 +48,22 @@ void Shop::Update() {
         if (mouse.x >= absPos.x && mouse.x <= absPos.x + size.x &&
             mouse.y >= absPos.y && mouse.y <= absPos.y + size.y) {
 
-          const Augment &aug = this->currentOffers[i];
-          if (this->currentMoney >= aug.cost) {
+          Skill *skill = this->allSkills[this->currentOffers[i]].get();
+          if (this->currentMoney >= skill->cost) {
             // Deduct money
             PurchaseEvent purchaseEvt;
-            purchaseEvt.cost = aug.cost;
+            purchaseEvt.cost = skill->cost;
             EventSystem::GetInstance()->Dispatch(EventType::ON_PURCHASE,
                                                  &purchaseEvt);
 
             // Dispatch augment info (for future use)
-            AugmentPurchasedEvent augEvt;
-            augEvt.augment = aug;
+            SkillPurchasedEvent skillEvt;
+            skillEvt.skill = skill->Clone();
 
-            std::cout << "Purchased augment: " << aug.name << std::endl;
+            EventSystem::GetInstance()->Dispatch(EventType::ON_SKILL_PURCHASED,
+                                                 &skillEvt);
+
+            std::cout << "Purchased skill: " << skill->name << std::endl;
             this->Close();
             return;
           }
@@ -69,13 +74,11 @@ void Shop::Update() {
 
   // Check buy time button
   if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-    Rml::Element *buyTimeBtn =
-        this->document->GetElementById("buy-time-btn");
+    Rml::Element *buyTimeBtn = this->document->GetElementById("buy-time-btn");
     if (buyTimeBtn) {
       Rml::Vector2f absPos =
           buyTimeBtn->GetAbsoluteOffset(Rml::BoxArea::Border);
-      Rml::Vector2f size =
-          buyTimeBtn->GetBox().GetSize(Rml::BoxArea::Border);
+      Rml::Vector2f size = buyTimeBtn->GetBox().GetSize(Rml::BoxArea::Border);
       Vector2 mouse = GetMousePosition();
 
       if (mouse.x >= absPos.x && mouse.x <= absPos.x + size.x &&
@@ -106,8 +109,8 @@ void Shop::Update() {
           purchaseEvt.cost = this->buyRerollCost;
           EventSystem::GetInstance()->Dispatch(EventType::ON_PURCHASE,
                                                &purchaseEvt);
-          std::cout << "Rerolled augments" << std::endl;
-          this->RollAugments();
+          std::cout << "Rerolled skills" << std::endl;
+          this->RollSkills();
           this->UpdateDOM();
         }
       }
@@ -116,8 +119,7 @@ void Shop::Update() {
     // Check skip button
     Rml::Element *skipBtn = this->document->GetElementById("skip-btn");
     if (skipBtn) {
-      Rml::Vector2f absPos =
-          skipBtn->GetAbsoluteOffset(Rml::BoxArea::Border);
+      Rml::Vector2f absPos = skipBtn->GetAbsoluteOffset(Rml::BoxArea::Border);
       Rml::Vector2f size = skipBtn->GetBox().GetSize(Rml::BoxArea::Border);
       Vector2 mouse = GetMousePosition();
 
@@ -141,8 +143,7 @@ void Shop::OnMoneyChanged(void *data) {
 
   // Update money display in shop if open
   if (this->isOpen && this->document) {
-    Rml::Element *moneyEl =
-        this->document->GetElementById("shop-money-value");
+    Rml::Element *moneyEl = this->document->GetElementById("shop-money-value");
     if (moneyEl) {
       moneyEl->SetInnerRML(std::to_string(this->currentMoney));
     }
@@ -154,7 +155,7 @@ void Shop::Open() {
     return;
 
   this->isOpen = true;
-  this->RollAugments();
+  this->RollSkills();
   this->UpdateDOM();
 
   if (this->document) {
@@ -179,17 +180,19 @@ void Shop::Close() {
   std::cout << "Shop closed" << std::endl;
 }
 
-void Shop::RollAugments() {
+void Shop::RollSkills() {
   this->currentOffers.clear();
+  if (this->allSkills.empty())
+    return;
 
-  // Shuffle and pick 3
-  std::vector<Augment> pool = this->allAugments;
-  int count = std::min(3, (int)pool.size());
+  std::vector<std::string> keys;
+  for (const auto &[key, _] : this->allSkills) {
+    keys.push_back(key);
+  }
 
-  for (int i = 0; i < count; i++) {
-    int idx = GetRandomValue(i, (int)pool.size() - 1);
-    std::swap(pool[i], pool[idx]);
-    this->currentOffers.push_back(pool[i]);
+  for (int i = 0; i < 3 && !keys.empty(); i++) {
+    int idx = GetRandomValue(0, (int)keys.size() - 1);
+    this->currentOffers.push_back(keys[idx]);
   }
 }
 
@@ -205,27 +208,26 @@ void Shop::UpdateDOM() {
       continue;
 
     if (i < (int)this->currentOffers.size()) {
-      const Augment &aug = this->currentOffers[i];
+      const std::string skillName = this->currentOffers[i];
+      Skill *skill = this->allSkills[skillName].get();
 
       // Update card with augment data
-      card->SetInnerRML("<p class=\"card-name\">" + aug.name +
-                        "</p><p class=\"card-desc\">" + aug.description +
+      card->SetInnerRML("<p class=\"card-name\">" + skill->name +
+                        "</p><p class=\"card-desc\">" + skill->description +
                         "</p><div class=\"card-cost\"><p "
                         "class=\"card-cost-value\">" +
-                        std::to_string(aug.cost) + "</p></div>");
+                        std::to_string(skill->cost) + "</p></div>");
     }
   }
 
   // Update money display
-  Rml::Element *moneyEl =
-      this->document->GetElementById("shop-money-value");
+  Rml::Element *moneyEl = this->document->GetElementById("shop-money-value");
   if (moneyEl) {
     moneyEl->SetInnerRML(std::to_string(this->currentMoney));
   }
 
   // Update buy time cost
-  Rml::Element *buyTimeBtn =
-      this->document->GetElementById("buy-time-btn");
+  Rml::Element *buyTimeBtn = this->document->GetElementById("buy-time-btn");
   if (buyTimeBtn) {
     buyTimeBtn->SetInnerRML("<p>Buy Time (+10s)</p><p class=\"btn-cost\">" +
                             std::to_string(this->buyTimeCost) + "</p>");

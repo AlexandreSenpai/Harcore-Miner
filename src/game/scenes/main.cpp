@@ -1,24 +1,29 @@
 #include "game/scenes/main.h"
+#include "engine/core/asset_manager.h"
 #include "game/ecs/player.h"
+#include "game/ecs/shopper.h"
 #include "game/level/stage_manager.h"
 #include "game/level/state_manager.h"
 #include "game/level/timer.h"
-#include "game/triggers/win_trigger.h"
 #include "game/shop/shop.h"
+#include "game/triggers/win_trigger.h"
 #include "game/ui/main_hud.h"
 #include "thirdParty/raylibRmlUi.h"
-#include "engine/core/asset_manager.h"
 #include <iostream>
 #include <raylib.h>
 
 MainScene::MainScene() : IScene("Main Scene") {
-  this->levelGenerator =
-      new LevelGenerator(AssetManager::GetResourcePath("src/game/level/level1.ldtk").c_str());
+  this->levelGenerator = new LevelGenerator(
+      AssetManager::GetResourcePath("src/game/level/level1.ldtk").c_str());
   this->levelGenerator->Build(0);
 
   Player *player = new Player();
   player->SetPosition({251.0f, 102.0f});
   this->AddEntity(player);
+
+  Shopper *shopper = new Shopper();
+  shopper->SetPosition({675.4f, 864.0f});
+  this->AddEntity(shopper);
 
   Timer *timer = new Timer(30.0f, TimeDirection::COUNTDOWN, 2, 100);
   this->AddEntity(timer);
@@ -32,21 +37,19 @@ MainScene::MainScene() : IScene("Main Scene") {
   this->GetCamera().SetBounds(1, 1, this->levelGenerator->GetLevelWidth(),
                               this->levelGenerator->GetLevelHeight());
 
-  Rml::ElementDocument *hudDoc =
-      RaylibRmlUi::LoadDocument(AssetManager::GetResourcePath("src/game/ui/main_hud/index.rml").c_str());
+  Rml::ElementDocument *hudDoc = RaylibRmlUi::LoadDocument(
+      AssetManager::GetResourcePath("src/game/ui/main_hud/index.rml").c_str());
   this->AddEntity(new MainHud(hudDoc));
 
-  Rml::ElementDocument *shopDoc =
-      RaylibRmlUi::LoadDocument(AssetManager::GetResourcePath("src/game/ui/shop/index.rml").c_str());
+  Rml::ElementDocument *shopDoc = RaylibRmlUi::LoadDocument(
+      AssetManager::GetResourcePath("src/game/ui/shop/index.rml").c_str());
   this->AddEntity(new Shop(shopDoc, timer));
 
   // Pause listeners
   EventSystem::GetInstance()->AddListener(
-      EventType::ON_SHOP_OPENED, [this](void *data) { this->paused = true;
-      });
+      EventType::ON_SHOP_OPENED, [this](void *data) { this->paused = true; });
   EventSystem::GetInstance()->AddListener(
-      EventType::ON_SHOP_CLOSED, [this](void *data) { this->paused = false;
-      });
+      EventType::ON_SHOP_CLOSED, [this](void *data) { this->paused = false; });
 
   std::cout << "MainScene loaded successfully!" << std::endl;
   timer->Start();
@@ -55,11 +58,6 @@ MainScene::MainScene() : IScene("Main Scene") {
 MainScene::~MainScene() { delete this->levelGenerator; }
 
 void MainScene::Update() {
-  if (IsKeyPressed(KEY_F1)) {
-    this->levelGenerator->SetShowDebugCollisions(
-        !this->levelGenerator->GetShowDebugCollisions());
-  }
-
   if (::IsWindowResized()) {
     this->GetCamera().SetBounds(1, 1, this->levelGenerator->GetLevelWidth(),
                                 this->levelGenerator->GetLevelHeight());

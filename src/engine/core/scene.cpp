@@ -2,6 +2,8 @@
 #include <imgui.h>
 #include <string>
 
+bool gShowDebugColliders = false;
+
 IScene::IScene(const char *name) { this->name = name; }
 
 IScene::~IScene() {
@@ -69,6 +71,7 @@ void IScene::Debug() {
   ImGui::Text("Scene: %s", this->name);
   ImGui::Text("FPS: %d", ::GetFPS());
   ImGui::Separator();
+  ImGui::Checkbox("Show Debug Colliders", &gShowDebugColliders);
 
   if (ImGui::CollapsingHeader("Entities", ImGuiTreeNodeFlags_DefaultOpen)) {
     ImGui::Indent();

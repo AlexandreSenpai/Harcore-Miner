@@ -21,4 +21,7 @@ public:
   int GetId() const override { return this->ID; }
 
   void FlipTexture(TextureComponent *textureComponent, bool flip);
+
+  void SetMoveSpeed(float speed) { this->speed = speed; }
+  float GetMoveSpeed() const { return this->speed; }
 };

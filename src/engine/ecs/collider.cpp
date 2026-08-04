@@ -147,9 +147,6 @@ void ColliderComponent::Update() {
   if (!this->IsEnabled()) {
     return;
   }
-
-  if (IsKeyPressed(KEY_F1))
-    this->showDebugCollisions = !this->showDebugCollisions;
 }
 
 void ColliderComponent::Draw() {
@@ -157,7 +154,7 @@ void ColliderComponent::Draw() {
     return;
 
   Rectangle bounds = this->GetWorldBounds();
-  if (this->showDebugCollisions)
+  if (gShowDebugColliders)
     ::DrawRectangleLinesEx(bounds, 1.0f, RED);
 }
 

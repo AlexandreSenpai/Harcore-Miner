@@ -3,6 +3,7 @@
 #include "thirdParty/json.hpp"
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 #include <raylib.h>
 
 LevelGenerator::LevelGenerator(const char *levelPath) {
@@ -23,8 +24,9 @@ void LevelGenerator::LoadWorldFile() {
 
   nlohmann::json tilesets = this->world["defs"]["tilesets"];
   for (nlohmann::json tileset : tilesets) {
+    std::filesystem::path tilesetPath = std::filesystem::path(this->levelPath).parent_path() / tileset["relPath"].get<std::string>();
     this->tilesets.push_back(
-        Tileset(tileset["relPath"].get<std::string>().c_str()));
+        Tileset(tilesetPath.lexically_normal().string().c_str()));
 
     if (tileset.contains("customData")) {
       for (nlohmann::json customData : tileset["customData"]) {

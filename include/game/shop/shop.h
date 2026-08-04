@@ -1,14 +1,15 @@
 #pragma once
 
 #include "engine/ecs/entity.h"
-#include "game/shop/augment.h"
 #include <RmlUi/Core.h>
+#include <game/ecs/skills/skill.h>
+#include <unordered_map>
 #include <vector>
 
 class Timer;
 
-struct AugmentPurchasedEvent {
-  Augment augment;
+struct SkillPurchasedEvent {
+  std::unique_ptr<Skill> skill;
 };
 
 struct PurchaseEvent {
@@ -20,8 +21,8 @@ private:
   Rml::ElementDocument *document = nullptr;
   Timer *timer = nullptr;
 
-  std::vector<Augment> allAugments;
-  std::vector<Augment> currentOffers; // 3 augments shown this round
+  std::unordered_map<std::string, std::unique_ptr<Skill>> allSkills;
+  std::vector<std::string> currentOffers; // 3 skills shown this round
 
   bool isOpen = false;
   int buyTimeCost = 30;
@@ -29,7 +30,7 @@ private:
 
   void Open();
   void Close();
-  void RollAugments();
+  void RollSkills();
   void UpdateDOM();
 
   void OnWinTrigger(void *data);

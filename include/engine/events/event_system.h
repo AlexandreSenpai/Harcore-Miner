@@ -16,7 +16,8 @@ enum EventType {
   ON_STAGE_CHANGED,
   ON_SHOP_OPENED,
   ON_SHOP_CLOSED,
-  ON_PURCHASE
+  ON_PURCHASE,
+  ON_SKILL_PURCHASED
 };
 
 using ISubscriber = std::function<void(void *data)>;
