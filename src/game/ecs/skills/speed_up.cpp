@@ -13,9 +13,39 @@ SpeedUpSkill::~SpeedUpSkill() {}
 
 bool SpeedUpSkill::LevelUp() {
   if (Skill::LevelUp()) {
+    this->Reset();
+
+    this->speed_multiplier += 0.25f;
+
     return true;
   }
   return false;
+}
+
+void SpeedUpSkill::Reset() {
+  if (!this->applied)
+    return;
+
+  if (this->player == nullptr) {
+    std::cout << "Player reference not set for skill " << this->name
+              << std::endl;
+    return;
+  }
+
+  Move2DComponent *moveComponent =
+      this->player->GetComponent<Move2DComponent>();
+  if (moveComponent == nullptr) {
+    std::cout << "Move2DComponent not found for skill " << this->name
+              << std::endl;
+    return;
+  }
+  float currentSpeed = moveComponent->GetMoveSpeed();
+  float newSpeed = currentSpeed / this->speed_multiplier;
+
+  moveComponent->SetMoveSpeed(newSpeed);
+  this->applied = false;
+
+  std::cout << "Speed Up skill reset: " << newSpeed << std::endl;
 }
 
 std::unique_ptr<Skill> SpeedUpSkill::Clone() const {

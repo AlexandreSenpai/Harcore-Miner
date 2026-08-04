@@ -19,6 +19,7 @@ public:
   virtual void Update();
   virtual void Draw();
   virtual bool LevelUp();
+  virtual void Reset();
   virtual std::unique_ptr<Skill> Clone() const;
 
   std::string name;

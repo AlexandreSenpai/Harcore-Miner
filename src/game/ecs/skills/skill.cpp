@@ -11,10 +11,11 @@ void Skill::Update() {}
 
 void Skill::Draw() {}
 
+void Skill::Reset() {}
+
 bool Skill::LevelUp() {
   if (this->level < this->max_level) {
     this->level++;
-    this->applied = false;
     return true;
   }
   return false;

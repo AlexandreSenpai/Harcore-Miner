@@ -11,6 +11,7 @@ public:
   void Update() override;
   void Draw() override;
   bool LevelUp() override;
+  void Reset() override;
   std::unique_ptr<Skill> Clone() const override;
 
 private:
