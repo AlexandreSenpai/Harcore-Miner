@@ -71,6 +71,10 @@ body {
     border: 2px #ffffff;
 }
 
+.shop-card.disabled, .shop-btn.disabled {
+    opacity: 0.4;
+}
+
 .card-name {
     font-size: 18px;
     font-weight: bold;

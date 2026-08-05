@@ -146,12 +146,9 @@ void Shop::OnMoneyChanged(void *data) {
   MoneyChangedEvent *event = (MoneyChangedEvent *)data;
   this->currentMoney = event->money;
 
-  // Update money display in shop if open
+  // Update money display and card states in shop if open
   if (this->isOpen && this->document) {
-    Rml::Element *moneyEl = this->document->GetElementById("shop-money-value");
-    if (moneyEl) {
-      moneyEl->SetInnerRML(std::to_string(this->currentMoney));
-    }
+    this->UpdateDOM();
   }
 }
 
@@ -233,6 +230,14 @@ void Shop::UpdateDOM() {
                         "class=\"card-cost-value\">" +
                         std::to_string(skill->cost) + "</p></div>");
       card->SetProperty("display", "flex");
+
+      if (this->currentMoney < skill->cost) {
+        card->SetProperty("opacity", "0.4");
+        card->SetClass("disabled", true);
+      } else {
+        card->SetProperty("opacity", "1.0");
+        card->SetClass("disabled", false);
+      }
     } else {
       card->SetProperty("display", "none");
     }
@@ -244,10 +249,29 @@ void Shop::UpdateDOM() {
     moneyEl->SetInnerRML(std::to_string(this->currentMoney));
   }
 
-  // Update buy time cost
+  // Update buy time cost and opacity
   Rml::Element *buyTimeBtn = this->document->GetElementById("buy-time-btn");
   if (buyTimeBtn) {
     buyTimeBtn->SetInnerRML("<p>Buy Time (+10s)</p><p class=\"btn-cost\">" +
                             std::to_string(this->buyTimeCost) + "</p>");
+    if (this->currentMoney < this->buyTimeCost) {
+      buyTimeBtn->SetProperty("opacity", "0.4");
+      buyTimeBtn->SetClass("disabled", true);
+    } else {
+      buyTimeBtn->SetProperty("opacity", "1.0");
+      buyTimeBtn->SetClass("disabled", false);
+    }
+  }
+
+  // Update reroll button opacity
+  Rml::Element *rerollBtn = this->document->GetElementById("reroll-btn");
+  if (rerollBtn) {
+    if (this->currentMoney < this->buyRerollCost) {
+      rerollBtn->SetProperty("opacity", "0.4");
+      rerollBtn->SetClass("disabled", true);
+    } else {
+      rerollBtn->SetProperty("opacity", "1.0");
+      rerollBtn->SetClass("disabled", false);
+    }
   }
 }
