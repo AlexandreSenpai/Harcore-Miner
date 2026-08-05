@@ -22,6 +22,7 @@ private:
   Timer *timer = nullptr;
 
   std::unordered_map<std::string, std::unique_ptr<Skill>> allSkills;
+  std::unordered_map<std::string, int> purchasedLevels;
   std::vector<std::string> currentOffers; // 3 skills shown this round
 
   bool isOpen = false;

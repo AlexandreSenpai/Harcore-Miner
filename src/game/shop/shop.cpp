@@ -48,7 +48,8 @@ void Shop::Update() {
         if (mouse.x >= absPos.x && mouse.x <= absPos.x + size.x &&
             mouse.y >= absPos.y && mouse.y <= absPos.y + size.y) {
 
-          Skill *skill = this->allSkills[this->currentOffers[i]].get();
+          const std::string &skillKey = this->currentOffers[i];
+          Skill *skill = this->allSkills[skillKey].get();
           if (this->currentMoney >= skill->cost) {
             // Deduct money
             PurchaseEvent purchaseEvt;
@@ -63,7 +64,11 @@ void Shop::Update() {
             EventSystem::GetInstance()->Dispatch(EventType::ON_SKILL_PURCHASED,
                                                  &skillEvt);
 
-            std::cout << "Purchased skill: " << skill->name << std::endl;
+            // Update shop's local memory of purchased skills
+            this->purchasedLevels[skillKey]++;
+
+            std::cout << "Purchased skill: " << skill->name << " (Purchased count: "
+                      << this->purchasedLevels[skillKey] << ")" << std::endl;
             this->Close();
             return;
           }
@@ -186,13 +191,23 @@ void Shop::RollSkills() {
     return;
 
   std::vector<std::string> keys;
-  for (const auto &[key, _] : this->allSkills) {
+  for (const auto &[key, skill] : this->allSkills) {
+    int currentLevel = 0;
+    auto it = this->purchasedLevels.find(key);
+    if (it != this->purchasedLevels.end()) {
+      currentLevel = it->second;
+    }
+
+    if (currentLevel >= skill->max_level) {
+      continue;
+    }
     keys.push_back(key);
   }
 
   for (int i = 0; i < 3 && !keys.empty(); i++) {
     int idx = GetRandomValue(0, (int)keys.size() - 1);
     this->currentOffers.push_back(keys[idx]);
+    keys.erase(keys.begin() + idx);
   }
 }
 
@@ -217,6 +232,9 @@ void Shop::UpdateDOM() {
                         "</p><div class=\"card-cost\"><p "
                         "class=\"card-cost-value\">" +
                         std::to_string(skill->cost) + "</p></div>");
+      card->SetProperty("display", "flex");
+    } else {
+      card->SetProperty("display", "none");
     }
   }
 

@@ -21,6 +21,7 @@ public:
 
   Vector2 GetWorldCenter();
   float GetRadius() { return radius; }
+  void SetRadius(float r) { this->radius = r; }
 
   bool IsSolid() { return isSolid; }
 
