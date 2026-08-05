@@ -6,14 +6,17 @@
 
 class SceneFactory {
 public:
-  virtual IScene *Create() = 0;
+  virtual std::unique_ptr<IScene> Create() = 0;
 };
 
 class SceneManager {
 private:
   static SceneManager *instance;
-  IScene *currentScene;
+  std::unique_ptr<IScene> currentScene;
+  std::string pendingSceneName = "";
   std::map<std::string, SceneFactory *> sceneFactories;
+
+  void ForceLoad(const char *sceneName);
 
 public:
   SceneManager();

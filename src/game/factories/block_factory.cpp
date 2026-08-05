@@ -12,14 +12,16 @@ IEntity *BlockFactory::CreateBlock(const BlockData &data) {
     texture->AddAnimation("breaking", {.texturePath = data.texturePath.c_str(),
                                        .frameRow = data.textureRow,
                                        .totalFrames = data.totalFrames,
-                                       .frameSize = 16,
+                                       .frameWidth = 16,
+                                       .frameHeight = 16,
                                        .framesPerSecond = 1,
                                        .frameTint = data.frameTint});
     texture->AddAnimation("destroying",
                           {.texturePath = data.texturePath.c_str(),
                            .frameRow = 0,
                            .totalFrames = 6,
-                           .frameSize = 16,
+                           .frameWidth = 16,
+                           .frameHeight = 16,
                            .framesPerSecond = 6,
                            .frameTint = data.frameTint});
     texture->SetCurrentAnimation("breaking");

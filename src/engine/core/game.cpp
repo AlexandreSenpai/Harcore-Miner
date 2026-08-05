@@ -1,10 +1,10 @@
 #include "engine/core/game.h"
-#include "engine/core/window.h"
 #include "engine/core/asset_manager.h"
+#include "engine/core/window.h"
 #include "game/scenes/main.h"
+#include "game/scenes/menu.h"
 #include "raylib.h"
 #include "thirdParty/raylibRmlUi.h"
-#include <iostream>
 
 Game::Game(int windowWidth, int windowHeight, int fps, const char *title) {
   this->window = new Window(windowWidth, windowHeight, fps, title);
@@ -19,10 +19,12 @@ void Game::Run() {
 
   ::InitAudioDevice();
   RaylibRmlUi::Initialize(GetScreenWidth(), GetScreenHeight());
-  RaylibRmlUi::LoadFont(AssetManager::GetResourcePath("src/game/ui/Roboto-Regular.ttf").c_str());
+  RaylibRmlUi::LoadFont(
+      AssetManager::GetResourcePath("src/game/ui/Roboto-Regular.ttf").c_str());
 
+  sceneManager->Add("Menu", new MenuSceneFactory());
   sceneManager->Add("Main", new MainSceneFactory());
-  sceneManager->Load("Main");
+  sceneManager->Load("Menu");
 
   RaylibRmlUi::EnableDebugger();
 

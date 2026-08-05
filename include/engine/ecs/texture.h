@@ -19,7 +19,8 @@ struct Animation {
   Texture2D texture;
   int frameRow = 0;
   int totalFrames;
-  int frameSize;
+  int frameWidth;
+  int frameHeight;
   int framesPerSecond = 1;
   float frameTimer = 0.0f;
   int currentFrame = 0;

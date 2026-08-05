@@ -15,7 +15,7 @@ Player::Player() : IEntity("Player") {
   this->AddComponent(new ColliderComponent(this, 11, 13, 1.6f, 3.0f));
   this->AddComponent(new CircleColliderComponent(this, 30.0f));
   this->AddComponent(new RigidBody2DComponent(this));
-  this->AddComponent(new AttackComponent(this, 25.0f));
+  this->AddComponent(new AttackComponent(this, 1.0f));
 
   TextureComponent *texture = new TextureComponent(this);
   texture->AddAnimation(
@@ -23,7 +23,8 @@ Player::Player() : IEntity("Player") {
                   .texturePath = "src/game/assets/Player/player_anim.png",
                   .frameRow = 0,
                   .totalFrames = 2,
-                  .frameSize = 16,
+                  .frameWidth = 16,
+                  .frameHeight = 16,
                   .framesPerSecond = 4,
               });
   texture->AddAnimation(
@@ -31,7 +32,8 @@ Player::Player() : IEntity("Player") {
                      .texturePath = "src/game/assets/Player/player_anim.png",
                      .frameRow = 1,
                      .totalFrames = 2,
-                     .frameSize = 16,
+                     .frameWidth = 16,
+                     .frameHeight = 16,
                      .framesPerSecond = 4,
                  });
 

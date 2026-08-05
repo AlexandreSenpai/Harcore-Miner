@@ -1,7 +1,7 @@
 #include "engine/ecs/texture.h"
 #include "engine/core/asset_manager.h"
-#include "engine/ecs/entity.h"
 #include "engine/core/scene.h"
+#include "engine/ecs/entity.h"
 #include "engine/managers/scene_manager.h"
 #include <cmath>
 #include <imgui.h>
@@ -20,9 +20,7 @@ TextureComponent::TextureComponent(IEntity *entity, const char *texturePath,
   this->playAnimation = playAnimation;
 }
 
-TextureComponent::~TextureComponent() {
-  this->RemoveShader();
-}
+TextureComponent::~TextureComponent() { this->RemoveShader(); }
 
 void TextureComponent::Draw() {
   if (!this->IsEnabled()) {
@@ -38,10 +36,10 @@ void TextureComponent::Draw() {
   if (!this->currentAnimation.empty()) {
     Animation &animation = this->animations[this->currentAnimation];
 
-    sourceRec.x = animation.currentFrame * animation.frameSize;
-    sourceRec.y = animation.frameRow * animation.frameSize;
-    sourceRec.width = animation.frameSize;
-    sourceRec.height = animation.frameSize;
+    sourceRec.x = animation.currentFrame * animation.frameWidth;
+    sourceRec.y = animation.frameRow * animation.frameHeight;
+    sourceRec.width = animation.frameWidth;
+    sourceRec.height = animation.frameHeight;
 
     frameTint = animation.frameTint;
     this->texture = animation.texture;
@@ -88,7 +86,8 @@ void TextureComponent::Debug() {
     ImGui::Text("Animation Name: %s", animationInfo.first.c_str());
     ImGui::InputInt("Frames Row", &animationInfo.second.frameRow);
     ImGui::InputInt("Total Frames", &animationInfo.second.totalFrames);
-    ImGui::InputInt("Frame Size", &animationInfo.second.frameSize);
+    ImGui::InputInt("Frame Width", &animationInfo.second.frameWidth);
+    ImGui::InputInt("Frame Height", &animationInfo.second.frameHeight);
     ImGui::InputInt("Frames Per Second", &animationInfo.second.framesPerSecond);
     ImGui::PopID();
   }

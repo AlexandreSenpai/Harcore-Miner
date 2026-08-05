@@ -21,12 +21,11 @@ SceneManager *SceneManager::GetInstance() {
 
 void SceneManager::Unload() {
   if (this->currentScene != nullptr) {
-    delete this->currentScene;
-    this->currentScene = nullptr;
+    this->currentScene.reset();
   }
 }
 
-void SceneManager::Load(const char *sceneName) {
+void SceneManager::ForceLoad(const char *sceneName) {
   if (this->currentScene != nullptr) {
     this->Unload();
   }
@@ -34,10 +33,18 @@ void SceneManager::Load(const char *sceneName) {
   auto it = this->sceneFactories.find(sceneName);
 
   if (it != this->sceneFactories.end()) {
-    IScene *scene = it->second->Create(); // instantiating scene
-    this->currentScene = scene;
+    std::unique_ptr<IScene> scene = it->second->Create(); // instantiating scene
+    this->currentScene = std::move(scene);
   } else {
-    this->currentScene = nullptr;
+    this->currentScene.reset();
+  }
+}
+
+void SceneManager::Load(const char *sceneName) {
+  if (this->currentScene == nullptr) {
+    this->ForceLoad(sceneName);
+  } else {
+    this->pendingSceneName = sceneName;
   }
 }
 
@@ -49,14 +56,12 @@ void SceneManager::Remove(const char *sceneName) {
   this->sceneFactories.erase(sceneName);
 }
 
-IScene *SceneManager::GetCurrentScene() { return this->currentScene; }
+IScene *SceneManager::GetCurrentScene() { return this->currentScene.get(); }
 
 void SceneManager::ChangeScene() {
-  if (IsKeyPressed(KEY_RIGHT_BRACKET)) {
-    this->Load("Battle Scene");
-  }
-
-  if (IsKeyPressed(KEY_LEFT_BRACKET)) {
-    this->Load("Auto Move Validation Scene");
+  if (!this->pendingSceneName.empty()) {
+    std::string nextScene = this->pendingSceneName;
+    this->pendingSceneName = "";
+    this->ForceLoad(nextScene.c_str());
   }
 }

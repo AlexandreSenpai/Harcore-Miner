@@ -1,24 +1,81 @@
 #include "engine/core/camera.h"
 #include "engine/ecs/entity.h"
 #include <cmath>
+#include <iostream>
 #include <raylib.h>
 
 GameCamera::GameCamera(float zoom, float rotation, float smoothSpeed)
     : smoothSpeed(smoothSpeed) {
   camera = {{0}};
   camera.zoom = zoom;
+
+  std::cout << "Initial Zoom" << zoom << std::endl;
+
   camera.rotation = rotation;
   camera.offset = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f};
 }
 
-void GameCamera::SetTarget(IEntity *entity) {
-  target = entity;
+void GameCamera::ScaleToFit() {
+  IEntity *target = this->target;
 
-  // Snap to target immediately on first assignment
-  if (target) {
-    Vector2 *pos = target->GetPosition();
-    camera.target = *pos;
+  if (!target)
+    return;
+
+  Vector2 *size = target->GetTransform();
+  int width = size->x;
+  int height = size->y;
+
+  if (width <= 0 || height <= 0)
+    return;
+
+  float targetZoomX = (float)GetScreenWidth() / width;
+  float targetZoomY = (float)GetScreenHeight() / height;
+
+  if (scaleMode == CameraScaleMode::FILL) {
+    camera.zoom = std::max(targetZoomX, targetZoomY);
+  } else {
+    camera.zoom = std::min(targetZoomX, targetZoomY);
   }
+}
+
+void GameCamera::SetAnchor(bool fitToScreen) {
+  if (!this->target)
+    return;
+
+  this->fitToScreen = fitToScreen;
+  Vector2 *pos = this->target->GetPosition();
+  Vector2 *size = this->target->GetTransform();
+
+  switch (this->anchor) {
+  case CENTERED:
+    camera.target = {pos->x + size->x / 2.0f, pos->y + size->y / 2.0f};
+    break;
+  case TOP_LEFT:
+    camera.target = *pos;
+    break;
+  case TOP_RIGHT:
+    camera.target = {pos->x + size->x, pos->y};
+    break;
+  case BOTTOM_LEFT:
+    camera.target = {pos->x, pos->y + size->y};
+    break;
+  case BOTTOM_RIGHT:
+    camera.target = {pos->x + size->x, pos->y + size->y};
+    break;
+  }
+
+  if (fitToScreen) {
+    this->ScaleToFit();
+  }
+}
+
+void GameCamera::SetTarget(IEntity *entity, CameraAnchor anchor,
+                           bool fitToScreen, CameraScaleMode mode) {
+  this->target = entity;
+  this->anchor = anchor;
+  this->scaleMode = mode;
+
+  this->SetAnchor(fitToScreen);
 }
 
 void GameCamera::Update() {
@@ -32,8 +89,9 @@ void GameCamera::Update() {
   }
 
   Vector2 *targetPos = target->GetPosition();
+  Vector2 *targetSize = target->GetTransform();
 
-  camera.target = *targetPos;
+  this->SetAnchor(this->fitToScreen);
   ClampToLevelBounds();
 }
 
@@ -79,8 +137,10 @@ void GameCamera::ClampToLevelBounds() {
 
 void GameCamera::Begin() {
   Camera2D renderCam = camera;
-  renderCam.target.x = std::round(renderCam.target.x * camera.zoom) / camera.zoom;
-  renderCam.target.y = std::round(renderCam.target.y * camera.zoom) / camera.zoom;
+  renderCam.target.x =
+      std::round(renderCam.target.x * camera.zoom) / camera.zoom;
+  renderCam.target.y =
+      std::round(renderCam.target.y * camera.zoom) / camera.zoom;
   BeginMode2D(renderCam);
 }
 

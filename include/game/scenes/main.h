@@ -21,5 +21,7 @@ public:
 
 class MainSceneFactory : public SceneFactory {
 public:
-  IScene *Create() override { return new MainScene(); }
+  std::unique_ptr<IScene> Create() override {
+    return std::make_unique<MainScene>();
+  }
 };

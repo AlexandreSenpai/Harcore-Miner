@@ -12,7 +12,8 @@ Shopper::Shopper() : IEntity("Shopper") {
                   .texturePath = "src/game/assets/shopper/shopper.png",
                   .frameRow = 0,
                   .totalFrames = 6,
-                  .frameSize = 16,
+                  .frameWidth = 16,
+                  .frameHeight = 16,
                   .framesPerSecond = 2,
               });
 
