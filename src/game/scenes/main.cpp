@@ -1,7 +1,6 @@
 #include "game/scenes/main.h"
 #include "engine/core/asset_manager.h"
 #include "game/ecs/player.h"
-#include "game/ecs/shopper.h"
 #include "game/level/stage_manager.h"
 #include "game/level/state_manager.h"
 #include "game/level/timer.h"
@@ -18,12 +17,8 @@ MainScene::MainScene() : IScene("Main Scene") {
   this->levelGenerator->Build(0);
 
   Player *player = new Player();
-  player->SetPosition({251.0f, 102.0f});
+  player->SetPosition({257, 272});
   this->AddEntity(player);
-
-  Shopper *shopper = new Shopper();
-  shopper->SetPosition({675.4f, 864.0f});
-  this->AddEntity(shopper);
 
   Timer *timer = new Timer(30.0f, TimeDirection::COUNTDOWN, 2, 100);
   this->AddEntity(timer);
